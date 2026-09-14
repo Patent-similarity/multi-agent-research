@@ -1,0 +1,24 @@
+# Env / secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Logs / runtime data
+logs/
+*.log
+revision_log/*.json
+!phase0/revision_log_schema.json
+runs/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

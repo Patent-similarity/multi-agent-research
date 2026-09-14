@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PlannerToRetrieval",
+  "type": "object",
+  "required": ["research_question", "sub_questions"],
+  "properties": {
+    "research_question": { "type": "string" },
+    "sub_questions": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "search_terms"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": ["approaches", "datasets", "architectures", "metrics", "disagreements"]
+          },
+          "question": { "type": "string" },
+          "search_terms": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "_invariants": [
+    "Exactly five sub_questions.",
+    "IDs must be exactly the five locked IDs, no additions.",
+    "search_terms must contain at least one term per sub-question."
+  ],
+  "_example": {
+    "research_question": "How do transformer-based models compare with convolutional/recurrent deep-learning approaches for EEG-based emotion recognition?",
+    "sub_questions": [
+      {
+        "id": "approaches",
+        "question": "What modeling approaches have been used for EEG-based emotion recognition, particularly transformer-based versus convolutional/recurrent approaches?",
+        "search_terms": ["EEG transformer emotion recognition", "EEG CNN RNN emotion recognition deep learning"]
+      }
+    ]
+  }
+}

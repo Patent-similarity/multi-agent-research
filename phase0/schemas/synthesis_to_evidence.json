@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SynthesisDraft",
+  "description": "Output of Synthesis. Consumed by Evidence (and, unmodified in shape, by Critic alongside Evidence's claim_checks output).",
+  "type": "object",
+  "required": ["research_question", "draft_id", "claims", "report"],
+  "properties": {
+    "research_question": { "type": "string" },
+    "draft_id": { "type": "string" },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "claim", "supporting_comparison_ids"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "claim": { "type": "string" },
+          "supporting_comparison_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "comparison_id values from the Comparison table this claim traces back to."
+          }
+        }
+      }
+    },
+    "report": {
+      "type": "string",
+      "description": "Full prose report text. Every factual claim in here should be traceable to an entry in 'claims'."
+    }
+  },
+  "_evidence_response_schema": {
+    "title": "EvidenceResponse",
+    "type": "object",
+    "required": ["draft_id", "claim_checks"],
+    "properties": {
+      "draft_id": { "type": "string" },
+      "claim_checks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["claim_id", "status", "evidence", "reason"],
+          "properties": {
+            "claim_id": { "type": "string" },
+            "status": { "type": "string", "enum": ["supported", "unsupported", "partially_supported"] },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["comparison_id", "arxiv_id"],
+                "properties": {
+                  "comparison_id": { "type": "string" },
+                  "arxiv_id": { "type": "string" }
+                }
+              }
+            },
+            "reason": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

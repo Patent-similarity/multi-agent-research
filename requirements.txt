@@ -1,0 +1,17 @@
+# Core
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+
+# LLM client (Agents 1-7 each make their own call)
+anthropic>=0.34.0
+
+# arXiv retrieval (Agents 1-4)
+arxiv>=2.1.0
+requests>=2.31.0
+
+# Frontend (Phase 5)
+streamlit>=1.35.0
+
+# Testing
+pytest>=8.0.0
+jsonschema>=4.22.0

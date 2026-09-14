@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RevisionInstructions",
+  "description": "Sent from Critic to Synthesis when decision = 'revise'. Synthesis must revise ONLY in response to these instructions — claims not named here must not be reworded.",
+  "type": "object",
+  "required": ["draft_id", "revision_instructions"],
+  "properties": {
+    "draft_id": { "type": "string" },
+    "revision_instructions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "original_claim", "reason", "required_change", "allowed_action", "supporting_evidence"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "original_claim": { "type": "string" },
+          "reason": { "type": "string" },
+          "required_change": {
+            "type": "string",
+            "description": "Specific instruction, not just 'fix this' — e.g. 'remove the specific accuracy figure; no source evidence reports a numeric value for this claim.'"
+          },
+          "allowed_action": {
+            "type": "string",
+            "enum": ["rewrite", "weaken", "remove"]
+          },
+          "supporting_evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["comparison_id", "arxiv_id"],
+              "properties": {
+                "comparison_id": { "type": "string" },
+                "arxiv_id": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

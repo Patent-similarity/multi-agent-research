@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CriticInput",
+  "description": "Critic receives the Synthesis draft plus Evidence's claim_checks output, merged.",
+  "type": "object",
+  "required": ["draft_id", "report", "claim_checks"],
+  "properties": {
+    "draft_id": { "type": "string" },
+    "report": { "type": "string" },
+    "claim_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "status", "evidence", "reason"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "status": { "type": "string", "enum": ["supported", "unsupported", "partially_supported"] },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["comparison_id", "arxiv_id"],
+              "properties": {
+                "comparison_id": { "type": "string" },
+                "arxiv_id": { "type": "string" }
+              }
+            }
+          },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  },
+  "_critic_response_schema": {
+    "title": "CriticResponse",
+    "type": "object",
+    "required": ["draft_id", "decision", "flags"],
+    "properties": {
+      "draft_id": { "type": "string" },
+      "decision": {
+        "type": "string",
+        "enum": ["revise", "accept"],
+        "description": "revise if len(flags) > 0, else accept. Binary trigger, no severity threshold — see loop_contract.md."
+      },
+      "flags": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["claim_id", "reason", "severity", "revision_instruction"],
+          "properties": {
+            "claim_id": { "type": "string" },
+            "reason": { "type": "string" },
+            "severity": {
+              "type": "string",
+              "enum": ["major", "minor"],
+              "description": "Display/logging only. Does not affect loop control."
+            },
+            "revision_instruction": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

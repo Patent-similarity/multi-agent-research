@@ -1,0 +1,66 @@
+{
+  "_comment": "Mock A - Happy Path. Expected behavior: Synthesis -> Evidence -> Critic -> ACCEPT. No revision should occur. Every claim is fully evidenced with a numeric result.",
+  "research_question": "How do transformer-based models compare with convolutional/recurrent deep-learning approaches for EEG-based emotion recognition?",
+  "comparison": [
+    {
+      "comparison_id": "cmp_001",
+      "source_claim_id": "claim_approaches_001",
+      "sub_question_id": "approaches",
+      "claim": "Transformer-based models have been applied to EEG emotion recognition to model long-range relationships between EEG representations.",
+      "approach": "Transformer",
+      "dataset": "DEAP",
+      "architecture": "Transformer encoder",
+      "metrics": ["accuracy", "F1"],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "XX%",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "mock-001",
+          "title": "Mock Transformer EEG Study",
+          "source_text": "Mock evidence supporting the transformer claim."
+        }
+      ],
+      "comparison_group": "transformer",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp_002",
+      "source_claim_id": "claim_approaches_002",
+      "sub_question_id": "approaches",
+      "claim": "CNN-based approaches have also been used for EEG emotion recognition.",
+      "approach": "CNN",
+      "dataset": "DEAP",
+      "architecture": "CNN",
+      "metrics": ["accuracy"],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "YY%",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "mock-002",
+          "title": "Mock CNN EEG Study",
+          "source_text": "Mock evidence supporting the CNN claim."
+        }
+      ],
+      "comparison_group": "cnn",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    }
+  ]
+}

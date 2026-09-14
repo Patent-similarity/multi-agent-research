@@ -1,0 +1,30 @@
+{
+  "_comment": "Mock B - Sparse/Partial. Tests: Synthesis must NOT invent missing performance values (reported_performance = []). Report should explicitly state when evidence is unavailable rather than filling the gap. Evidence/Critic should distinguish 'not reported' from 'reported as zero'.",
+  "research_question": "How do transformer-based models compare with convolutional/recurrent deep-learning approaches for EEG-based emotion recognition?",
+  "comparison": [
+    {
+      "comparison_id": "cmp_sparse_001",
+      "source_claim_id": "claim_datasets_003",
+      "sub_question_id": "datasets",
+      "claim": "The study evaluates its model on the DEAP dataset.",
+      "approach": "Transformer",
+      "dataset": "DEAP",
+      "architecture": "Transformer encoder",
+      "metrics": ["accuracy"],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "mock-003",
+          "title": "Mock Sparse Study",
+          "source_text": "The model was evaluated on DEAP."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "medium"
+    }
+  ]
+}

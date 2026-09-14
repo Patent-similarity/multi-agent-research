@@ -1,0 +1,30 @@
+{
+  "_comment": "Mock C - Malformed/Adversarial. INTENTIONALLY INVALID. Tests whether Agents 5-7 reject or safely flag this claim rather than trusting the Comparison table at face value. Defects, deliberately present: (1) evidence = [] despite a specific numeric performance claim, (2) dataset = '' instead of null (violates the null-not-empty-string rule), (3) confidence = 'high' despite zero supporting evidence, (4) a 99% accuracy figure with no source_text anywhere to back it. This is specifically designed to test whether the verification layer does real work, not just passthrough trust.",
+  "research_question": "test",
+  "comparison": [
+    {
+      "comparison_id": "cmp_bad_001",
+      "source_claim_id": null,
+      "sub_question_id": "metrics",
+      "claim": "The model achieves 99% accuracy.",
+      "approach": "Transformer",
+      "dataset": "",
+      "architecture": null,
+      "metrics": [],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "99%",
+          "unit": null
+        }
+      ],
+      "evidence": [],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    }
+  ]
+}

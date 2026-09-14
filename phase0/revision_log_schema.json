@@ -1,0 +1,82 @@
+{
+  "_comment": "Unified revision-log schema. One schema, used by Phase 3 debugging, Phase 4 robustness logging, and the Phase 5 frontend 'X of Y claims revised' stat. Do not build a second logging system.",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RevisionLogRow",
+  "type": "object",
+  "required": [
+    "run_id",
+    "draft_id",
+    "revision_number",
+    "claim_id",
+    "before_claim",
+    "after_claim",
+    "flag_reason",
+    "flag_severity",
+    "critic_decision",
+    "revision_action",
+    "resolved",
+    "final_status",
+    "timestamp"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "draft_id": { "type": "string" },
+    "revision_number": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "0 = original claim before any revision. 1 = result of first revision. 2 = result of second revision."
+    },
+    "claim_id": { "type": "string" },
+    "before_claim": { "type": "string" },
+    "after_claim": {
+      "type": ["string", "null"],
+      "description": "null is permitted when the claim is removed (revision_action = 'remove')."
+    },
+    "flag_reason": {
+      "type": "string",
+      "description": "Free text in v0.1 — see open question below re: enum."
+    },
+    "flag_severity": {
+      "type": "string",
+      "enum": ["major", "minor"],
+      "description": "Captured for display only. Does NOT affect loop control — see loop_contract.md."
+    },
+    "critic_decision": {
+      "type": "string",
+      "enum": ["revise", "accept"]
+    },
+    "revision_action": {
+      "type": "string",
+      "enum": ["rewrite", "weaken", "remove", "unchanged"]
+    },
+    "resolved": {
+      "type": "boolean",
+      "description": "True if this specific flag was no longer present after the subsequent Critic evaluation."
+    },
+    "final_status": {
+      "type": "string",
+      "enum": ["revised", "shipped_with_flag"],
+      "description": "Terminal status for this claim once the run ends."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601."
+    }
+  },
+  "_run_level_outcome_comment": "The run-level summary object below is derived FROM this log, not maintained independently. The frontend's 'X of Y claims revised' stat must be computed from revision-log rows, not a separate counter.",
+  "_run_level_outcome_example": {
+    "run_id": "string",
+    "final_status": "accepted | revised_and_accepted | shipped_with_flags",
+    "revision_count": 0,
+    "claims_total": 0,
+    "claims_revised": 0,
+    "flags_remaining": 0
+  },
+  "_derivation_rules": {
+    "claims_total": "count(distinct claim_id in final synthesis draft)",
+    "claims_revised": "count(distinct claim_id where at least one row has revision_number > 0)",
+    "flags_remaining": "count(distinct claim_id where final_status == 'shipped_with_flag')"
+  },
+  "_open_question": "flag_reason is currently free text (mirrors Critic's 'reason' field in critic_to_synthesis.json). If a Phase 6 breakdown by reason type (unsupported / overstated / contradicted / missing_citation) is wanted for the writeup, lock this to an enum before Phase 3. Currently unconfirmed — flagging so it isn't missed."
+}

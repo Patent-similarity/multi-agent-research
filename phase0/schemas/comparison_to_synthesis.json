@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComparisonToSynthesis",
+  "description": "CRITICAL SHARED CONTRACT. This is the boundary between the retrieval/analysis workstream (Agents 1-4) and the synthesis/verification workstream (Agents 5-7). Agents 5-7 build entirely against this schema in Phase 1, using the mocks/ fixtures. Neither side should silently change this schema without updating this file.",
+  "type": "object",
+  "required": ["research_question", "comparison"],
+  "properties": {
+    "research_question": { "type": "string" },
+    "comparison": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "comparison_id",
+          "source_claim_id",
+          "sub_question_id",
+          "claim",
+          "approach",
+          "dataset",
+          "architecture",
+          "metrics",
+          "reported_performance",
+          "evidence",
+          "comparison_group",
+          "disagreement",
+          "confidence"
+        ],
+        "properties": {
+          "comparison_id": { "type": "string" },
+          "source_claim_id": {
+            "type": ["string", "null"],
+            "description": "The Analysis-agent claim_id this row was built from. Owned by Comparison agent (Ayush / Agents 1-4). null only for rows synthesized from multiple findings with no single originating claim_id — should be rare."
+          },
+          "sub_question_id": {
+            "type": "string",
+            "enum": ["approaches", "datasets", "architectures", "metrics", "disagreements"]
+          },
+          "claim": { "type": "string" },
+          "approach": { "type": ["string", "null"] },
+          "dataset": { "type": ["string", "null"] },
+          "architecture": { "type": ["string", "null"] },
+          "metrics": { "type": "array", "items": { "type": "string" } },
+          "reported_performance": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["metric", "value", "unit"],
+              "properties": {
+                "metric": { "type": "string" },
+                "value": { "type": "string" },
+                "unit": { "type": ["string", "null"] }
+              }
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["arxiv_id", "title", "source_text"],
+              "properties": {
+                "arxiv_id": { "type": "string" },
+                "title": { "type": "string" },
+                "source_text": { "type": "string" }
+              }
+            }
+          },
+          "comparison_group": { "type": ["string", "null"] },
+          "disagreement": {
+            "type": "object",
+            "required": ["present", "description"],
+            "properties": {
+              "present": { "type": "boolean" },
+              "description": {
+                "type": ["string", "null"],
+                "description": "null when present = false. Never empty string."
+              }
+            }
+          },
+          "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+        }
+      }
+    }
+  },
+  "_invariants": [
+    "Every comparison row must have comparison_id, sub_question_id, claim, and at least one evidence item.",
+    "Nullable fields (approach, dataset, architecture, comparison_group, disagreement.description, source_claim_id) are represented as null, never empty string. This distinction matters for downstream validation (see mocks/comparison_malformed.json for what violating this looks like).",
+    "source_claim_id must be copied forward from the originating Analysis finding's claim_id by the Comparison agent (Ayush / Agents 1-4 responsibility)."
+  ]
+}

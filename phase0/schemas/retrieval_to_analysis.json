@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RetrievalToAnalysis",
+  "type": "object",
+  "required": ["sub_question_id", "papers", "retrieval_metadata"],
+  "properties": {
+    "sub_question_id": {
+      "type": "string",
+      "enum": ["approaches", "datasets", "architectures", "metrics", "disagreements"]
+    },
+    "papers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["arxiv_id", "title", "authors", "published", "abstract", "arxiv_url"],
+        "properties": {
+          "arxiv_id": { "type": "string" },
+          "title": { "type": "string" },
+          "authors": { "type": "array", "items": { "type": "string" } },
+          "published": { "type": "string", "format": "date" },
+          "abstract": { "type": "string" },
+          "arxiv_url": { "type": "string" }
+        }
+      }
+    },
+    "retrieval_metadata": {
+      "type": "object",
+      "required": ["queries", "num_results_raw", "num_results_after_dedup"],
+      "properties": {
+        "queries": { "type": "array", "items": { "type": "string" } },
+        "num_results_raw": { "type": "integer" },
+        "num_results_after_dedup": {
+          "type": "integer",
+          "description": "Dedup WITHIN this sub-question's own raw results only. Cross-sub-question global dedup happens downstream, over the canonical paper set — see retrieval_spec.md."
+        }
+      }
+    }
+  },
+  "_invariants": [
+    "arxiv_id is the canonical paper identifier.",
+    "No duplicate arxiv_id values within the papers array of a single response.",
+    "retrieval_metadata.queries records the query actually used, not the sub-question text.",
+    "Zero results is valid: papers = []."
+  ],
+  "_example_empty": {
+    "sub_question_id": "disagreements",
+    "papers": [],
+    "retrieval_metadata": {
+      "queries": ["EEG transformer CNN benchmark comparison limitation"],
+      "num_results_raw": 0,
+      "num_results_after_dedup": 0
+    }
+  }
+}

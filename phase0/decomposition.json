@@ -1,0 +1,25 @@
+{
+  "_comment": "Fixed decomposition. Planner MUST NOT dynamically invent categories. Every research question maps to exactly these five sub-questions, in this order, with these IDs.",
+  "sub_questions": [
+    {
+      "id": "approaches",
+      "question": "What modeling approaches have been used for EEG-based emotion recognition, particularly transformer-based versus convolutional/recurrent approaches?"
+    },
+    {
+      "id": "datasets",
+      "question": "Which EEG emotion-recognition datasets are used, and what are their key characteristics?"
+    },
+    {
+      "id": "architectures",
+      "question": "What model architectures are used within the identified approaches?"
+    },
+    {
+      "id": "metrics",
+      "question": "Which evaluation metrics are reported, and what performance do the studies report?"
+    },
+    {
+      "id": "disagreements",
+      "question": "Where do studies disagree in their conclusions, reported performance, or interpretation of model effectiveness?"
+    }
+  ]
+}
