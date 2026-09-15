@@ -60,6 +60,8 @@ Return this exact structure:
 
         draft = parse_json_response(response)
 
+        draft["research_question"] = research_question
+
         # Give every build a local draft ID if the model did not provide one.
         if not draft.get("draft_id"):
             draft["draft_id"] = str(uuid.uuid4())
