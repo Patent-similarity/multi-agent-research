@@ -3,7 +3,7 @@ python-dotenv>=1.0.0
 pydantic>=2.0.0
 
 # LLM client (Agents 1-7 each make their own call)
-anthropic>=0.34.0
+google-genai>=1.0.0
 
 # arXiv retrieval (Agents 1-4)
 arxiv>=2.1.0
