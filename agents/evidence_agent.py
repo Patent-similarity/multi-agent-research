@@ -14,21 +14,46 @@ class EvidenceAgent:
     def _validate_claim_checks(
         self,
         claim_checks: list,
+        draft: dict,
         comparison_input: dict,
     ) -> list:
-        """Remove invalid evidence references and downgrade unsupported claims."""
+        """Validate evidence references and ensure every claim is checked."""
 
         comparisons = {
             row["comparison_id"]: row
             for row in comparison_input["comparison"]
         }
 
+        returned_checks = {
+            check.get("claim_id"): check
+            for check in claim_checks
+            if check.get("claim_id")
+        }
+
         validated = []
 
-        for check in claim_checks:
+        for claim in draft["claims"]:
+            claim_id = claim["claim_id"]
+            check = returned_checks.get(claim_id)
+
+            # If Gemini forgot to check a claim, fail closed.
+            if not check:
+                validated.append(
+                    {
+                        "claim_id": claim_id,
+                        "status": "unsupported",
+                        "evidence": [],
+                        "reason": (
+                            "No evidence check was returned for this "
+                            "synthesis claim."
+                        ),
+                    }
+                )
+                continue
+
             valid_evidence = []
 
-            for evidence_ref in check.get("evidence", []):
+            for evidence_ref in check.get("evidence", []) or []:
                 comparison_id = evidence_ref.get("comparison_id")
                 arxiv_id = evidence_ref.get("arxiv_id")
 
@@ -42,7 +67,7 @@ class EvidenceAgent:
 
                 row_arxiv_ids = {
                     evidence.get("arxiv_id")
-                    for evidence in row.get("evidence", [])
+                    for evidence in (row.get("evidence") or [])
                     if evidence.get("arxiv_id")
                 }
 
@@ -55,6 +80,10 @@ class EvidenceAgent:
 
             if not valid_evidence:
                 check["status"] = "unsupported"
+                check["reason"] = (
+                    "The cited evidence failed validation against the original "
+                    "comparison data, so the claim cannot be treated as supported."
+                )
 
             validated.append(check)
 
@@ -121,8 +150,11 @@ Return exactly this structure:
 
         result = parse_json_response(response)
 
+        result["draft_id"] = draft["draft_id"]
+
         result["claim_checks"] = self._validate_claim_checks(
             result.get("claim_checks", []),
+            draft,
             comparison_input,
         )
 
