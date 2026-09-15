@@ -1,0 +1,1 @@
+"""Provide a common interface for calling an LLM."""

@@ -1,0 +1,1 @@
+"""Orchestrate synthesis, evidence checking, criticism, and revision."""
