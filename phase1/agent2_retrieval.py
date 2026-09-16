@@ -306,6 +306,49 @@ def parse_arxiv_entry(entry):
 
 
 # ============================================================
+# EEG DOMAIN RELEVANCE FILTER
+# ============================================================
+#
+# swayam flagged that arXiv's `all:<query>` search only requires
+# the query words to appear SOMEWHERE in a paper (title, abstract,
+# comments...), not that the paper is actually ABOUT EEG. A paper
+# doing face/posture/text-based emotion recognition can still match
+# if it mentions "EEG" once in passing (e.g. "unlike EEG-based
+# methods, we use..."). phase0/retrieval_spec.md locks the corpus
+# around EEG + emotion recognition, so we enforce that here as a
+# hard post-filter: keep a paper only if EEG is genuinely central
+# to it, not just mentioned in passing.
+
+_EEG_TERMS = [
+    "eeg",
+    "electroencephalog",  # covers electroencephalogram/-graphy/-graphic
+]
+
+
+def is_eeg_relevant(paper):
+    """
+    True only if the paper's TITLE mentions EEG, or the ABSTRACT
+    mentions an EEG term more than once (a single incidental mention
+    in a related-work sentence is exactly the false-positive pattern
+    swayam found — e.g. EMERSK, a face/posture paper that mentions
+    EEG once while distinguishing itself from EEG-based approaches).
+    Requiring it in the title OR repeated in the abstract is a cheap,
+    conservative way to separate "this paper is about EEG" from
+    "this paper mentions EEG."
+    """
+    title_lower = paper.get("title", "").lower()
+    abstract_lower = paper.get("abstract", "").lower()
+
+    if any(term in title_lower for term in _EEG_TERMS):
+        return True
+
+    abstract_mentions = sum(
+        abstract_lower.count(term) for term in _EEG_TERMS
+    )
+    return abstract_mentions >= 2
+
+
+# ============================================================
 # SEARCH arXiv API
 # ============================================================
 
@@ -791,6 +834,8 @@ def retrieve_sub_question(
 
     seen_ids = set()
 
+    domain_filtered_count = 0
+
     for paper in all_papers:
 
         arxiv_id = paper[
@@ -804,8 +849,23 @@ def retrieve_sub_question(
             arxiv_id
         )
 
+        if not is_eeg_relevant(paper):
+            domain_filtered_count += 1
+            print(
+                f"    [FILTERED - off-domain] "
+                f"{paper['title'][:90]}"
+            )
+            continue
+
         unique_papers.append(
             paper
+        )
+
+    if domain_filtered_count:
+        print(
+            f"  Filtered out {domain_filtered_count} "
+            f"paper(s) not actually about EEG "
+            f"(matched query words but off-domain)"
         )
 
     # ========================================================

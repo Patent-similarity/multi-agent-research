@@ -84,6 +84,14 @@ relevant to answering this sub-question:
 SUB-QUESTION ({sub_question_id}): {question_text}
 
 STRICT RULES:
+0. DOMAIN CHECK (do this first, per paper): only extract findings from a
+   paper if EEG (electroencephalography) is genuinely the core signal/method
+   the paper uses for emotion recognition. If a paper uses a DIFFERENT
+   modality as its actual method — facial expression, speech/audio, text,
+   posture/body language, multimodal-but-not-EEG-based — extract ZERO
+   findings from it, even if its abstract mentions "EEG" in passing (e.g.
+   "unlike EEG-based approaches, we use..." is explicitly NOT an EEG paper —
+   that sentence is contrasting itself against EEG methods, not using EEG).
 1. Only extract claims actually supported by the abstract text given. Do
    not infer, guess, or fill in numbers/facts not present in the abstract.
 2. If a claim mentions a numeric result (accuracy, F1, etc.), it MUST be a
