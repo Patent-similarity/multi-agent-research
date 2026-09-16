@@ -32,9 +32,16 @@ Rules:
    - claim_id
    - reason
    - severity
-6. Use severity values: "low", "medium", or "high".
-7. If there are no problems, return an empty flags list.
-8. Return ONLY valid JSON.
+   - revision_instruction
+   - allowed_action
+6. Use severity values: "major" or "minor".
+7. Use allowed_action values:
+   - "rewrite" when the claim should be rewritten using the available evidence.
+   - "weaken" when the claim is broadly valid but is stated too strongly.
+   - "remove" when the claim cannot be supported by the available evidence.
+8. Choose allowed_action based only on the evidence verification result.
+9. If there are no problems, return an empty flags list.
+10. Return ONLY valid JSON.
 
 Return exactly this structure:
 {{
@@ -43,7 +50,9 @@ Return exactly this structure:
     {{
       "claim_id": "string",
       "reason": "string",
-      "severity": "low|medium|high"
+      "severity": "major|minor",
+      "revision_instruction": "string",
+      "allowed_action": "rewrite|weaken|remove"
     }}
   ]
 }}

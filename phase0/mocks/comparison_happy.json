@@ -14,7 +14,7 @@
       "reported_performance": [
         {
           "metric": "accuracy",
-          "value": "XX%",
+          "value": "86%",
           "unit": "%"
         }
       ],
@@ -44,7 +44,7 @@
       "reported_performance": [
         {
           "metric": "accuracy",
-          "value": "YY%",
+          "value": "76%",
           "unit": "%"
         }
       ],

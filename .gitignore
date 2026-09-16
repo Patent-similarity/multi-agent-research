@@ -22,3 +22,6 @@ runs/
 # IDE
 .vscode/
 .idea/
+
+# Phase 1 generated outputs
+phase1/output/

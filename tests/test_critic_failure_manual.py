@@ -44,5 +44,10 @@ print(json.dumps(result, indent=2))
 assert result["draft_id"] == "manual_critic_failure_test"
 assert len(result["flags"]) > 0
 assert result["decision"] == "revise"
+assert result["flags"][0]["allowed_action"] in {
+    "rewrite",
+    "weaken",
+    "remove",
+}
 
 print("Critic failure-path test passed.")
