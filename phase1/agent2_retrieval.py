@@ -819,12 +819,11 @@ def retrieve_sub_question(
         ],
         "search_terms": search_terms,
         "papers": unique_papers,
-        "raw_result_count": len(
-            all_papers
-        ),
-        "unique_paper_count": len(
-            unique_papers
-        ),
+        "retrieval_metadata": {
+            "queries": search_terms,
+            "num_results_raw": len(all_papers),
+            "num_results_after_dedup": len(unique_papers),
+        },
     }
 
     output_file = (
@@ -1154,10 +1153,30 @@ def main():
     )
     print("=" * 70)
 
-    validate_or_raise(
-        canonical_payload,
-        "retrieval_to_analysis.json",
-    )
+    # NOTE: retrieval_to_analysis.json describes the shape of ONE
+    # sub-question's output (sub_question_id, papers,
+    # retrieval_metadata) — it does NOT describe the global
+    # canonical merge (which has no sub_question_id, since a
+    # canonical paper can belong to several sub-questions at once).
+    # So we validate each real per-sub-question file individually
+    # here, and leave the canonical payload unvalidated against
+    # this schema (it was never meant to match it).
+    for sub_question in sub_questions:
+
+        sub_question_id = sub_question["id"]
+
+        retrieval_file = (
+            OUTPUT_DIR / f"retrieval_{sub_question_id}.json"
+        )
+
+        payload = load_json(retrieval_file)
+
+        validate_or_raise(
+            payload,
+            "retrieval_to_analysis.json",
+        )
+
+        print(f"  {sub_question_id}: valid")
 
     # ========================================================
     # COMPLETE
