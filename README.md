@@ -1,4 +1,4 @@
-# Research Agent
+# Research Agent(Work in Progress)
 
 A multi-agent pipeline that answers a research question by retrieving papers
 from arXiv, extracting and comparing findings, synthesizing a report, and
