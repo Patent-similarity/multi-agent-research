@@ -1,0 +1,104 @@
+{
+  "sub_question_id": "metrics",
+  "findings": [
+    {
+      "claim_id": "metrics-001",
+      "claim": "Under a subject-independent evaluation protocol, a multi-scale temporal framework with dynamic fusion achieves 65.22% accuracy for a two-class task and 45.43% accuracy for a three-class task in EEG-based emotion recognition.",
+      "evidence": [
+        {
+          "arxiv_id": "2608.09088",
+          "source_text": "The best results are 65.22% for the two-class task and 45.43% for the three-class task."
+        }
+      ],
+      "dataset": null,
+      "approach": "Multi-scale temporal framework with dynamic fusion",
+      "architecture": "Shared attention-based encoder with dynamic fusion module",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "accuracy",
+          "value": "65.22%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "45.43%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "metrics-002",
+      "claim": "In cross-subject and cross-session EEG emotion classification, transfer learning methods achieve the best performance in terms of average classification accuracy.",
+      "evidence": [
+        {
+          "arxiv_id": "2212.08744",
+          "source_text": "The studies with the best results in terms of average classification accuracy were identified, supporting that transfer learning methods seem to perform better than other approaches."
+        }
+      ],
+      "dataset": null,
+      "approach": "Transfer learning",
+      "architecture": null,
+      "metrics": [
+        "average classification accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "metrics-003",
+      "claim": "Integrating Neural-Gas Network features, PSO, and fuzzy logic with XGBoost enhances emotion recognition accuracy using physiological EEG signals.",
+      "evidence": [
+        {
+          "arxiv_id": "2407.09950",
+          "source_text": "Acquired results indicate that our methodologies enhance the accuracy of emotion recognition systems and outperform other feature selection techniques using the majority of classifiers"
+        }
+      ],
+      "dataset": null,
+      "approach": "PSO Fuzzy XGBoost with NGN features",
+      "architecture": "Neural-Gas Network (NGN) combined with XGBoost, PSO, and fuzzy logic",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "metrics-004",
+      "claim": "Simultaneous spatial-temporal attention achieves the best emotion recognition accuracy compared to other spatial and temporal transformer architectures for EEG.",
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "source_text": "The experimental results demonstrate that simultaneous spatial-temporal attention leads to the best emotion recognition accuracy among the design choices"
+        }
+      ],
+      "dataset": null,
+      "approach": "Spatial-temporal Transformers",
+      "architecture": "Simultaneous spatial-temporal attention framework",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "metrics-005",
+      "claim": "Evaluation of EEG foundation models across datasets in OmniEEG-Bench uses average rank as a standard metric, showing pretraining dataset diversity and model size correlate with better ranks.",
+      "evidence": [
+        {
+          "arxiv_id": "2606.00815",
+          "source_text": "Both pretraining dataset diversity and model size are significantly associated with better average ranks across datasets"
+        }
+      ],
+      "dataset": null,
+      "approach": "Foundation model benchmarking",
+      "architecture": null,
+      "metrics": [
+        "average rank"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    }
+  ]
+}

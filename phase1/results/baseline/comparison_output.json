@@ -1,0 +1,1026 @@
+{
+  "research_question": "How do transformer-based models compare with convolutional/recurrent deep-learning approaches for EEG-based emotion recognition, in terms of datasets, architectures, evaluation metrics, and reported performance \u2014 and where do published studies disagree?",
+  "comparison": [
+    {
+      "comparison_id": "cmp-001",
+      "source_claim_id": "approaches-001",
+      "sub_question_id": "approaches",
+      "claim": "Combining Neural-Gas Networks (NGN) for feature extraction with Particle Swarm Optimization (PSO), fuzzy logic, and XGBoost enhances emotion recognition performance using EEG signals.",
+      "approach": "Feature extraction and fuzzy optimization with tree-based boosting",
+      "dataset": null,
+      "architecture": "NGN with PSO-fuzzy XGBoost",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2407.09950",
+          "title": "PSO Fuzzy XGBoost Classifier Boosted with Neural Gas Features on EEG Signals in Emotion Recognition",
+          "source_text": "This study explores the integration of Neural-Gas Network (NGN), XGBoost, Particle Swarm Optimization (PSO), and fuzzy logic to enhance emotion recognition using physiological signals."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-002",
+      "source_claim_id": "approaches-002",
+      "sub_question_id": "approaches",
+      "claim": "Spatial-temporal transformer frameworks, specifically simultaneous spatial-temporal attention, effectively model the intrinsic relationships and correlations between spatial and temporal EEG features for emotion recognition.",
+      "approach": "Transformer-based spatial-temporal modeling",
+      "dataset": null,
+      "architecture": "Spatial-temporal Transformer",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "title": "Spatial-temporal Transformers for EEG Emotion Recognition",
+          "source_text": "This work proposes four variant transformer frameworks (spatial attention, temporal attention, sequential spatial-temporal attention and simultaneous spatial-temporal attention) for EEG emotion recognition"
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-003",
+      "source_claim_id": "approaches-003",
+      "sub_question_id": "approaches",
+      "claim": "CIT-EmotionNet combines CNN and Transformer architectures in parallel with a dedicated interaction module to fuse local and global features from EEG spatial-frequency representations, achieving 98.57% accuracy on SEED and 92.09% on SEED-IV.",
+      "approach": "Parallel CNN and Transformer interaction",
+      "dataset": "SEED, SEED-IV",
+      "architecture": "CIT-EmotionNet",
+      "metrics": [
+        "average recognition accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "average recognition accuracy on SEED",
+          "value": "98.57",
+          "unit": "%"
+        },
+        {
+          "metric": "average recognition accuracy on SEED-IV",
+          "value": "92.09",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2305.05548",
+          "title": "CIT-EmotionNet: CNN Interactive Transformer Network for EEG Emotion Recognition",
+          "source_text": "we integrate Convolutional Neural Network (CNN) and Transformer within a single framework in a parallel manner... achieving an average recognition accuracy of 98.57% and 92.09% on two publicly available datasets, SEED and SEED-IV, respectively."
+        }
+      ],
+      "comparison_group": "SEED, SEED-IV",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-004",
+      "source_claim_id": "approaches-004",
+      "sub_question_id": "approaches",
+      "claim": "The Fourier Adjacency Transformer integrates Fourier-based periodic feature extraction with graph-driven adjacency attention to capture channel correlations, yielding an accuracy improvement of approximately 6.5%.",
+      "approach": "Fourier-based analysis with graph-driven transformer modeling",
+      "dataset": "SEED, DEAP",
+      "architecture": "Fourier Adjacency Transformer",
+      "metrics": [
+        "recognition accuracy improvement"
+      ],
+      "reported_performance": [
+        {
+          "metric": "recognition accuracy improvement",
+          "value": "approximately 6.5%",
+          "unit": null
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2503.13465",
+          "title": "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition",
+          "source_text": "we present the Fourier Adjacency Transformer, a novel framework that seamlessly integrates Fourier-based periodic analysis with graph-driven structural modeling... achieving an improvement of approximately 6.5% in recognition accuracy."
+        }
+      ],
+      "comparison_group": "SEED, DEAP",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-005",
+      "source_claim_id": "approaches-005",
+      "sub_question_id": "approaches",
+      "claim": "Systematic evaluation indicates that transfer learning approaches perform better than other machine learning methods in mitigating dataset shift for cross-subject and cross-session EEG emotion classification.",
+      "approach": "Transfer learning",
+      "dataset": null,
+      "architecture": null,
+      "metrics": [
+        "average classification accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2212.08744",
+          "title": "Toward cross-subject and cross-session generalization in EEG-based emotion recognition: Systematic review, taxonomy, and methods",
+          "source_text": "The studies with the best results in terms of average classification accuracy were identified, supporting that transfer learning methods seem to perform better than other approaches."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-006",
+      "source_claim_id": "approaches-006",
+      "sub_question_id": "approaches",
+      "claim": "A progressive graph convolution network (PGCN) using dual-graph and dual-head modules captures functional dynamic connections and spatial proximity to perform coarse-to-fine-grained EEG emotion classification.",
+      "approach": "Graph Convolutional Network (GCN)",
+      "dataset": "SEED-IV, MPED",
+      "architecture": "Progressive Graph Convolution Network (PGCN)",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2112.09069",
+          "title": "Progressive Graph Convolution Network for EEG Emotion Recognition",
+          "source_text": "we propose a progressive graph convolution network (PGCN) for capturing this inherent characteristic in EEG emotional signals and progressively learning the discriminative EEG features."
+        }
+      ],
+      "comparison_group": "SEED-IV, MPED",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-007",
+      "source_claim_id": "approaches-007",
+      "sub_question_id": "approaches",
+      "claim": "The Transferable Attention Neural Network (TANN) employs local and global attention mechanisms with brain-region-level and sample-level discriminators to highlight transferable EEG regions across subjects.",
+      "approach": "Transferable local and global attention mechanism",
+      "dataset": null,
+      "architecture": "Transferable Attention Neural Network (TANN)",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2009.09585",
+          "title": "A Novel Transferability Attention Neural Network Model for EEG Emotion Recognition",
+          "source_text": "we propose a transferable attention neural network (TANN) for EEG emotion recognition, which learns the emotional discriminative information by highlighting the transferable EEG brain regions data and samples adaptively through local and global attention mechanism."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-008",
+      "source_claim_id": "approaches-008",
+      "sub_question_id": "approaches",
+      "claim": "The locally temporal-spatial pattern learning graph attention network (LTS-GAT) uses a divide-and-conquer scheme and dynamic domain discriminator to extract local temporal-spatial patterns and handle inter-subject variations.",
+      "approach": "Graph Attention Network (GAT) with dynamic domain adaptation",
+      "dataset": null,
+      "architecture": "LTS-GAT",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2208.11087",
+          "title": "Locally temporal-spatial pattern learning with graph attention mechanism for EEG-based emotion recognition",
+          "source_text": "we proposed a locally temporal-spatial pattern learning graph attention network (LTS-GAT) in the present study. In the LTS-GAT, a divide-and-conquer scheme was used to examine local information on temporal and spatial dimensions of EEG patterns based on the graph attention mechanism."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-009",
+      "source_claim_id": "approaches-009",
+      "sub_question_id": "approaches",
+      "claim": "A four-dimensional attention-based neural network (4D-aNN) combines CNNs for spectral-spatial feature extraction and BiLSTMs with temporal attention for modeling time dependencies on 4D EEG representations.",
+      "approach": "Hybrid Convolutional and Recurrent Network (CNN + BiLSTM) with multi-domain attention",
+      "dataset": "SEED",
+      "architecture": "4D Attention-based Neural Network (4D-aNN)",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2101.05484",
+          "title": "4D Attention-based Neural Network for EEG Emotion Recognition",
+          "source_text": "a convolutional neural network (CNN) is utilized to deal with the spectral and spatial information of the 4D representations. Moreover, a temporal attention mechanism is integrated into a bidirectional Long Short-Term Memory (LSTM) to explore temporal dependencies of the 4D representations."
+        }
+      ],
+      "comparison_group": "SEED",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-010",
+      "source_claim_id": "datasets-001",
+      "sub_question_id": "datasets",
+      "claim": "The DEAP dataset is evaluated using channel subsets (such as 12 channels compared to the full 32 channels) to predict emotion across four quadrants of arousal and valence.",
+      "approach": "Continuous Wavelet Transformation scaleograms with reduced channel subsets",
+      "dataset": "DEAP",
+      "architecture": "Vision Transformer (ViT)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "12-channel accuracy",
+          "value": "91,57%",
+          "unit": null
+        },
+        {
+          "metric": "32-channel state-of-the-art accuracy",
+          "value": "96,9%",
+          "unit": null
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2510.00725",
+          "title": "DEAP DIVE: Dataset Investigation with Vision transformers for EEG evaluation",
+          "source_text": "This work examines how subsets of EEG channels from the DEAP dataset can be used for sufficiently accurate emotion prediction... achieve over 91,57% accuracy in predicting 4 quadrants (high/low per arousal and valence) with only 12 measuring points... state-of-the-art results of 96,9% with 32 channels."
+        }
+      ],
+      "comparison_group": "DEAP",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-011",
+      "source_claim_id": "datasets-002",
+      "sub_question_id": "datasets",
+      "claim": "SEED, SEED-V, and DEAP are public EEG emotion datasets used to evaluate connectivity features, with DEAP focusing on arousal/valence dimensions and SEED/SEED-V covering discrete emotions.",
+      "approach": "EEG functional connectivity network feature extraction combined with eye movement and physiological signals via deep CCA",
+      "dataset": "SEED, SEED-V, DEAP",
+      "architecture": "Deep Canonical Correlation Analysis (DCCA)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "SEED accuracy",
+          "value": "95.08/6.42%",
+          "unit": null
+        },
+        {
+          "metric": "SEED-V accuracy",
+          "value": "84.51/5.11%",
+          "unit": null
+        },
+        {
+          "metric": "DEAP arousal accuracy",
+          "value": "85.34/2.90%",
+          "unit": null
+        },
+        {
+          "metric": "DEAP valence accuracy",
+          "value": "86.61/3.76%",
+          "unit": null
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2004.01973",
+          "title": "Investigating EEG-Based Functional Connectivity Patterns for Multimodal Emotion Recognition",
+          "source_text": "The discrimination ability of the EEG connectivity features in emotion recognition is evaluated on three public emotion EEG datasets: SEED, SEED-V, and DEAP... classification accuracies of multimodal emotion recognition are 95.08/6.42% on the SEED dataset, 84.51/5.11% on the SEED-V dataset, and 85.34/2.90% and 86.61/3.76% for arousal and valence on the DEAP dataset, respectively."
+        }
+      ],
+      "comparison_group": "SEED, SEED-V, DEAP",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-012",
+      "source_claim_id": "datasets-003",
+      "sub_question_id": "datasets",
+      "claim": "DEAP (evaluated for Arousal and Valence), SEED, and SEED-IV are benchmark EEG emotion recognition datasets used for multi-dimensional attention-based evaluation.",
+      "approach": "3D temporal-spectral-spatial EEG representation extraction",
+      "dataset": "DEAP, SEED, SEED-IV",
+      "architecture": "Attention-based Multiple Dimensions EEG Transformer (AMDET)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "DEAP-Arousal accuracy",
+          "value": "97.48",
+          "unit": "%"
+        },
+        {
+          "metric": "DEAP-Valence accuracy",
+          "value": "96.85",
+          "unit": "%"
+        },
+        {
+          "metric": "SEED accuracy",
+          "value": "97.17",
+          "unit": "%"
+        },
+        {
+          "metric": "SEED-IV accuracy",
+          "value": "87.32",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2212.12134",
+          "title": "AMDET: Attention based Multiple Dimensions EEG Transformer for Emotion Recognition",
+          "source_text": "We conduct extensive experiments on the DEAP, SEED, and SEED-IV datasets to evaluate the performance of AMDET... Accuracy rates of 97.48%, 96.85%, 97.17%, 87.32% were achieved in the DEAP-Arousal, DEAP-Valence, SEED, and SEED-IV datasets, respectively."
+        }
+      ],
+      "comparison_group": "DEAP, SEED, SEED-IV",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-013",
+      "source_claim_id": "datasets-004",
+      "sub_question_id": "datasets",
+      "claim": "SEED and DEAP are standard datasets used to evaluate Fourier-based periodic and graph-driven structural EEG emotion recognition models.",
+      "approach": "Fourier-based periodic analysis integrated with graph-driven structural modeling",
+      "dataset": "SEED, DEAP",
+      "architecture": "Fourier Adjacency Transformer",
+      "metrics": [
+        "accuracy improvement"
+      ],
+      "reported_performance": [
+        {
+          "metric": "accuracy improvement",
+          "value": "approximately 6.5%",
+          "unit": null
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2503.13465",
+          "title": "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition",
+          "source_text": "Empirical evaluations on SEED and DEAP datasets demonstrate that our method surpasses existing state-of-the-art techniques, achieving an improvement of approximately 6.5% in recognition accuracy."
+        }
+      ],
+      "comparison_group": "SEED, DEAP",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-014",
+      "source_claim_id": "architectures-001",
+      "sub_question_id": "architectures",
+      "claim": "The PSO Fuzzy XGBoost classifier framework integrates a Neural-Gas Network (NGN) for feature extraction with Particle Swarm Optimization (PSO) and fuzzy logic for hyperparameter tuning and decision optimization.",
+      "approach": "Integration of NGN feature extraction with PSO-optimized fuzzy XGBoost classification",
+      "dataset": null,
+      "architecture": "Neural-Gas Network (NGN) and PSO Fuzzy XGBoost",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2407.09950",
+          "title": "PSO Fuzzy XGBoost Classifier Boosted with Neural Gas Features on EEG Signals in Emotion Recognition",
+          "source_text": "This study explores the integration of Neural-Gas Network (NGN), XGBoost, Particle Swarm Optimization (PSO), and fuzzy logic to enhance emotion recognition using physiological signals."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-015",
+      "source_claim_id": "architectures-002",
+      "sub_question_id": "architectures",
+      "claim": "The Dual Attentive (DuA) transformer architecture processes full long-term EEG trials using spatial-spectral, temporal, and transfer learning modules.",
+      "approach": "Trial-based long-term continuous EEG emotion analysis using Dual Attentive Transformer",
+      "dataset": null,
+      "architecture": "Dual Attentive (DuA) Transformer",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2407.20519",
+          "title": "DuA: Dual Attentive Transformer in Long-Term Continuous EEG Emotion Analysis",
+          "source_text": "The DuA transformer incorporates three key modules: the spatial-spectral network module, the temporal network module, and the transfer learning module."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-016",
+      "source_claim_id": "architectures-003",
+      "sub_question_id": "architectures",
+      "claim": "The Emotion Transformer (EmT) architecture combines a Temporal Graph Construction (TGC) module, a Residual Multi-view Pyramid GCN (RMPG) module, a Temporal Contextual Transformer (TCT) module, and a Task-Specific Output (TSO) module.",
+      "approach": "Dynamic graph representation learning and temporal contextual transformers for cross-subject EEG emotion decoding",
+      "dataset": null,
+      "architecture": "Emotion Transformer (EmT) with GCN and Transformer modules",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2406.18345",
+          "title": "EmT: A Novel Transformer for Generalized Cross-subject EEG Emotion Recognition",
+          "source_text": "In EmT, EEG signals are transformed into a temporal graph format... A novel residual multi-view pyramid GCN module (RMPG) is then proposed... Furthermore, we design a temporal contextual transformer module (TCT)... Finally, the task-specific output module (TSO) generates the desired outputs."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-017",
+      "source_claim_id": "architectures-004",
+      "sub_question_id": "architectures",
+      "claim": "Four variant Transformer architectures\u2014spatial attention, temporal attention, sequential spatial-temporal attention, and simultaneous spatial-temporal attention\u2014were designed for EEG emotion recognition, with simultaneous spatial-temporal attention performing best.",
+      "approach": "Spatial-temporal Transformer variants for EEG emotion recognition",
+      "dataset": null,
+      "architecture": "Spatial-temporal Transformer (simultaneous, sequential, spatial, and temporal variants)",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "title": "Spatial-temporal Transformers for EEG Emotion Recognition",
+          "source_text": "This work proposes four variant transformer frameworks~(spatial attention, temporal attention, sequential spatial-temporal attention and simultaneous spatial-temporal attention) for EEG emotion recognition"
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-018",
+      "source_claim_id": "architectures-005",
+      "sub_question_id": "architectures",
+      "claim": "CIT-EmotionNet combines a Convolutional Neural Network (CNN) and Transformer in parallel with an interactive module to extract local and global features from spatial-frequency EEG representations.",
+      "approach": "Parallel CNN-Transformer interaction for joint local and global spatial-frequency feature fusion",
+      "dataset": "SEED",
+      "architecture": "CIT-EmotionNet (Parallel CNN-Transformer)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "98.57",
+          "unit": "%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "92.09",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2305.05548",
+          "title": "CIT-EmotionNet: CNN Interactive Transformer Network for EEG Emotion Recognition",
+          "source_text": "we integrate Convolutional Neural Network (CNN) and Transformer within a single framework in a parallel manner. Finally, we design a CNN interactive Transformer module"
+        }
+      ],
+      "comparison_group": "SEED",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-019",
+      "source_claim_id": "architectures-006",
+      "sub_question_id": "architectures",
+      "claim": "The Fourier Adjacency Transformer architecture integrates Fourier-inspired periodic feature extraction modules with an adjacency attention graph scheme.",
+      "approach": "Fourier periodic feature decoupling combined with graph-driven adjacency attention",
+      "dataset": "SEED",
+      "architecture": "Fourier Adjacency Transformer",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "accuracy improvement",
+          "value": "6.5",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2503.13465",
+          "title": "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition",
+          "source_text": "Our method first leverages novel Fourier-inspired modules to extract periodic features from embedded EEG signals, effectively decoupling them from aperiodic components. Subsequently, we employ an adjacency attention scheme to reinforce universal inter-channel correlation patterns"
+        }
+      ],
+      "comparison_group": "SEED",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-020",
+      "source_claim_id": "architectures-007",
+      "sub_question_id": "architectures",
+      "claim": "A Transformer architecture utilizing channel weight-shared temporal feature extractors and multi-head self-attention adaptively captures temporal dynamics and spatial correlations in EEG signals.",
+      "approach": "Temporal-spatial representation learning via weight-shared temporal feature extractors and multi-head self-attention Transformer",
+      "dataset": "DEAP",
+      "architecture": "Transformer with channel weight-shared temporal feature extractors",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2211.08880",
+          "title": "Temporal-spatial Representation Learning Transformer for EEG-based Emotion Recognition",
+          "source_text": "temporal feature extractors which share the weight among all the EEG channels are designed to adaptively extract dynamic context information from raw signals. Furthermore, multi-head self-attention mechanism within the transformers could adaptively localize the vital EEG fragments"
+        }
+      ],
+      "comparison_group": "DEAP",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-021",
+      "source_claim_id": "architectures-008",
+      "sub_question_id": "architectures",
+      "claim": "The Attention-based Multiple Dimensions EEG Transformer (AMDET) employs a 3D temporal-spectral-spatial input representation processed by a spectral-spatial transformer encoder layer and a temporal attention layer.",
+      "approach": "Multi-dimensional global attention on 3D temporal-spectral-spatial EEG representations",
+      "dataset": "DEAP",
+      "architecture": "Attention-based Multiple Dimensions EEG Transformer (AMDET)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "97.48",
+          "unit": "%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "96.85",
+          "unit": "%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "97.17",
+          "unit": "%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "87.32",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2212.12134",
+          "title": "AMDET: Attention based Multiple Dimensions EEG Transformer for Emotion Recognition",
+          "source_text": "We transformed the original EEG data into 3D temporal-spectral-spatial representations and then the AMDET would use spectral-spatial transformer encoder layer to extract effective features in the EEG signal and concentrate on the critical time frame with a temporal attention layer."
+        }
+      ],
+      "comparison_group": "DEAP",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-022",
+      "source_claim_id": "architectures-009",
+      "sub_question_id": "architectures",
+      "claim": "A 3D Convolutional Neural Network (3D CNN) architecture classifies EEG emotions using spatial-temporal-spectral representations generated from Multivariate Empirical Mode Decomposition (MEMD) and Marginal Hilbert Spectrum (MHS).",
+      "approach": "MEMD-HHT feature extraction coupled with 3D CNN classification",
+      "dataset": "DEAP",
+      "architecture": "3D Convolutional Neural Network (3D CNN)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "valence accuracy",
+          "value": "89.25",
+          "unit": "%"
+        },
+        {
+          "metric": "arousal accuracy",
+          "value": "86.23",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2206.00918",
+          "title": "MEMD-HHT based Emotion Detection from EEG using 3D CNN",
+          "source_text": "A 3D convolutional neural network (CNN) is adopted to perform emotion detection with spatial-temporal-spectral feature representations that are constructed by stacking the multi-channel MHS over consecutive signal segments."
+        }
+      ],
+      "comparison_group": "DEAP",
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-023",
+      "source_claim_id": "architectures-010",
+      "sub_question_id": "architectures",
+      "claim": "Deep Convolutional Neural Networks (CNN) extract spatiotemporal features from EEG signals across varying window sizes and electrode orderings for emotion recognition.",
+      "approach": "Spatiotemporal EEG feature extraction using deep CNNs across different window sizes",
+      "dataset": null,
+      "architecture": "Deep Convolutional Neural Network (CNN)",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "1910.09719",
+          "title": "Spatiotemporal Emotion Recognition using Deep CNN Based on EEG during Music Listening",
+          "source_text": "In this work, a study of CNN and its spatiotemporal feature extraction has been conducted in order to explore capabilities of the model in varied window sizes and electrode orders."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-024",
+      "source_claim_id": "architectures-011",
+      "sub_question_id": "architectures",
+      "claim": "The EEG-based Emotion Style Transfer Network (E2STN) consists of a transfer module, a transfer evaluation module, and a discriminative prediction module to enable cross-dataset emotion recognition.",
+      "approach": "Style transfer network to align source emotional content and target statistical characteristics",
+      "dataset": null,
+      "architecture": "EEG-based Emotion Style Transfer Network (E2STN)",
+      "metrics": [],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2308.05767",
+          "title": "EEG-based Emotion Style Transfer Network for Cross-dataset Emotion Recognition",
+          "source_text": "E2STN consists of three modules, i.e., transfer module, transfer evaluation module, and discriminative prediction module."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-025",
+      "source_claim_id": "metrics-001",
+      "sub_question_id": "metrics",
+      "claim": "Under a subject-independent evaluation protocol, a multi-scale temporal framework with dynamic fusion achieves 65.22% accuracy for a two-class task and 45.43% accuracy for a three-class task in EEG-based emotion recognition.",
+      "approach": "Multi-scale temporal framework with dynamic fusion",
+      "dataset": null,
+      "architecture": "Shared attention-based encoder with dynamic fusion module",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "65.22",
+          "unit": "%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "45.43",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2608.09088",
+          "title": "A Multi-Scale Temporal Framework with Dynamic Fusion for EEG-Based Emotion Recognition",
+          "source_text": "The best results are 65.22% for the two-class task and 45.43% for the three-class task."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-026",
+      "source_claim_id": "metrics-002",
+      "sub_question_id": "metrics",
+      "claim": "In cross-subject and cross-session EEG emotion classification, transfer learning methods achieve the best performance in terms of average classification accuracy.",
+      "approach": "Transfer learning",
+      "dataset": null,
+      "architecture": null,
+      "metrics": [
+        "average classification accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2212.08744",
+          "title": "Toward cross-subject and cross-session generalization in EEG-based emotion recognition: Systematic review, taxonomy, and methods",
+          "source_text": "The studies with the best results in terms of average classification accuracy were identified, supporting that transfer learning methods seem to perform better than other approaches."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-027",
+      "source_claim_id": "metrics-003",
+      "sub_question_id": "metrics",
+      "claim": "Integrating Neural-Gas Network features, PSO, and fuzzy logic with XGBoost enhances emotion recognition accuracy using physiological EEG signals.",
+      "approach": "PSO Fuzzy XGBoost with NGN features",
+      "dataset": null,
+      "architecture": "Neural-Gas Network (NGN) combined with XGBoost, PSO, and fuzzy logic",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2407.09950",
+          "title": "PSO Fuzzy XGBoost Classifier Boosted with Neural Gas Features on EEG Signals in Emotion Recognition",
+          "source_text": "Acquired results indicate that our methodologies enhance the accuracy of emotion recognition systems and outperform other feature selection techniques using the majority of classifiers"
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-028",
+      "source_claim_id": "metrics-004",
+      "sub_question_id": "metrics",
+      "claim": "Simultaneous spatial-temporal attention achieves the best emotion recognition accuracy compared to other spatial and temporal transformer architectures for EEG.",
+      "approach": "Spatial-temporal Transformers",
+      "dataset": null,
+      "architecture": "Simultaneous spatial-temporal attention framework",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "title": "Spatial-temporal Transformers for EEG Emotion Recognition",
+          "source_text": "The experimental results demonstrate that simultaneous spatial-temporal attention leads to the best emotion recognition accuracy among the design choices"
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-029",
+      "source_claim_id": "metrics-005",
+      "sub_question_id": "metrics",
+      "claim": "Evaluation of EEG foundation models across datasets in OmniEEG-Bench uses average rank as a standard metric, showing pretraining dataset diversity and model size correlate with better ranks.",
+      "approach": "Foundation model benchmarking",
+      "dataset": null,
+      "architecture": null,
+      "metrics": [
+        "average rank"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2606.00815",
+          "title": "OmniEEG-Bench: A Standardized Evaluation Benchmark for EEG Foundation Models",
+          "source_text": "Both pretraining dataset diversity and model size are significantly associated with better average ranks across datasets"
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": false,
+        "description": null
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-030",
+      "source_claim_id": "disagreements-001",
+      "sub_question_id": "disagreements",
+      "claim": "A systematic review indicates that transfer learning approaches perform better than alternative machine learning methods for addressing cross-subject and cross-session generalization in EEG-based emotion classification.",
+      "approach": "transfer learning",
+      "dataset": null,
+      "architecture": null,
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2212.08744",
+          "title": "Toward cross-subject and cross-session generalization in EEG-based emotion recognition: Systematic review, taxonomy, and methods",
+          "source_text": "supporting that transfer learning methods seem to perform better than other approaches."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": true,
+        "description": "A systematic review indicates that transfer learning approaches perform better than alternative machine learning methods for addressing cross-subject and cross-session generalization in EEG-based emotion classification."
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-031",
+      "source_claim_id": "disagreements-002",
+      "sub_question_id": "disagreements",
+      "claim": "Simultaneous modeling of spatial and temporal EEG features yields superior emotion recognition accuracy compared to sequential spatial-temporal attention, spatial-only attention, or temporal-only attention.",
+      "approach": "simultaneous spatial-temporal attention",
+      "dataset": null,
+      "architecture": "transformer",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [],
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "title": "Spatial-temporal Transformers for EEG Emotion Recognition",
+          "source_text": "The experimental results demonstrate that simultaneous spatial-temporal attention leads to the best emotion recognition accuracy among the design choices, indicating modeling the correlation of spatial and temporal features of EEG signals is significant to emotion recognition."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": true,
+        "description": "Simultaneous modeling of spatial and temporal EEG features yields superior emotion recognition accuracy compared to sequential spatial-temporal attention, spatial-only attention, or temporal-only attention."
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-032",
+      "source_claim_id": "disagreements-003",
+      "sub_question_id": "disagreements",
+      "claim": "Dynamic multi-scale temporal fusion outperforms feature concatenation in EEG emotion recognition, but the best-performing temporal scales differ depending on whether the task is two-class or three-class classification.",
+      "approach": "multi-scale temporal framework with dynamic fusion",
+      "dataset": null,
+      "architecture": "attention-based encoder with dynamic fusion module",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "65.22",
+          "unit": "%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "45.43",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2608.09088",
+          "title": "A Multi-Scale Temporal Framework with Dynamic Fusion for EEG-Based Emotion Recognition",
+          "source_text": "The best-performing temporal scales differ between the two tasks. Dynamic fusion outperforms concatenation in the highest-scoring two-class configuration and slightly exceeds it in the highest-scoring three-class configuration, although these multi-scale settings require substantially more computation than the full-signal baseline."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": true,
+        "description": "Dynamic multi-scale temporal fusion outperforms feature concatenation in EEG emotion recognition, but the best-performing temporal scales differ depending on whether the task is two-class or three-class classification."
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-033",
+      "source_claim_id": "disagreements-004",
+      "sub_question_id": "disagreements",
+      "claim": "High EEG emotion recognition accuracy exceeding 90% can be maintained using as few as eight selected EEG channels, demonstrating that full high-density electrode arrays are not required for high performance.",
+      "approach": "channel reduction via attention visualization",
+      "dataset": null,
+      "architecture": "Attention-based Multiple Dimensions EEG Transformer (AMDET)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_performance": [
+        {
+          "metric": "accuracy",
+          "value": "90",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2212.12134",
+          "title": "AMDET: Attention based Multiple Dimensions EEG Transformer for Emotion Recognition",
+          "source_text": "AMDET can perform as well even with few channels which are identified by visualizing what learned model focus on. The accuracy could achieve over 90% even with only eight channels"
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": true,
+        "description": "High EEG emotion recognition accuracy exceeding 90% can be maintained using as few as eight selected EEG channels, demonstrating that full high-density electrode arrays are not required for high performance."
+      },
+      "confidence": "high"
+    },
+    {
+      "comparison_id": "cmp-034",
+      "source_claim_id": "disagreements-005",
+      "sub_question_id": "disagreements",
+      "claim": "Segment-based EEG emotion recognition methods perform well on short segments but encounter challenges in long-term continuous scenarios where trial-based processing achieves better adaptability.",
+      "approach": "trial-based emotion analysis",
+      "dataset": null,
+      "architecture": "Dual Attentive (DuA) transformer",
+      "metrics": [
+        "enhancement"
+      ],
+      "reported_performance": [
+        {
+          "metric": "average enhancement",
+          "value": "5.28",
+          "unit": "%"
+        }
+      ],
+      "evidence": [
+        {
+          "arxiv_id": "2407.20519",
+          "title": "DuA: Dual Attentive Transformer in Long-Term Continuous EEG Emotion Analysis",
+          "source_text": "Current EEG-based emotion recognition methods perform well with short segments of EEG data. However, these methods encounter significant challenges in real-life scenarios where emotional states evolve over extended periods."
+        }
+      ],
+      "comparison_group": null,
+      "disagreement": {
+        "present": true,
+        "description": "Segment-based EEG emotion recognition methods perform well on short segments but encounter challenges in long-term continuous scenarios where trial-based processing achieves better adaptability."
+      },
+      "confidence": "high"
+    }
+  ]
+}

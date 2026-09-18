@@ -1,0 +1,45 @@
+{
+  "research_question": "How do transformer-based models compare with convolutional/recurrent deep-learning approaches for EEG-based emotion recognition, in terms of datasets, architectures, evaluation metrics, and reported performance — and where do published studies disagree?",
+  "sub_questions": [
+    {
+      "id": "approaches",
+      "question": "What modeling approaches have been used for EEG-based emotion recognition, particularly transformer-based versus convolutional/recurrent approaches?",
+      "search_terms": [
+        "EEG emotion recognition transformer",
+        "EEG emotion recognition deep learning attention"
+      ]
+    },
+    {
+      "id": "datasets",
+      "question": "Which EEG emotion-recognition datasets are used, and what are their key characteristics?",
+      "search_terms": [
+        "EEG emotion recognition dataset",
+        "EEG emotion DEAP SEED"
+      ]
+    },
+    {
+      "id": "architectures",
+      "question": "What model architectures are used within the identified approaches?",
+      "search_terms": [
+        "EEG emotion transformer architecture",
+        "EEG emotion CNN RNN"
+      ]
+    },
+    {
+      "id": "metrics",
+      "question": "Which evaluation metrics are reported, and what performance do the studies report?",
+      "search_terms": [
+        "EEG emotion recognition accuracy F1",
+        "EEG emotion recognition evaluation metrics"
+      ]
+    },
+    {
+      "id": "disagreements",
+      "question": "Where do studies disagree in their conclusions, reported performance, or interpretation of model effectiveness?",
+      "search_terms": [
+        "EEG emotion transformer CNN comparison",
+        "EEG emotion recognition benchmark limitations"
+      ]
+    }
+  ]
+}

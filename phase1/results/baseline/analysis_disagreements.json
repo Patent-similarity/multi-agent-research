@@ -1,0 +1,114 @@
+{
+  "sub_question_id": "disagreements",
+  "findings": [
+    {
+      "claim_id": "disagreements-001",
+      "claim": "A systematic review indicates that transfer learning approaches perform better than alternative machine learning methods for addressing cross-subject and cross-session generalization in EEG-based emotion classification.",
+      "evidence": [
+        {
+          "arxiv_id": "2212.08744",
+          "source_text": "supporting that transfer learning methods seem to perform better than other approaches."
+        }
+      ],
+      "dataset": null,
+      "approach": "transfer learning",
+      "architecture": null,
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "disagreements-002",
+      "claim": "Simultaneous modeling of spatial and temporal EEG features yields superior emotion recognition accuracy compared to sequential spatial-temporal attention, spatial-only attention, or temporal-only attention.",
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "source_text": "The experimental results demonstrate that simultaneous spatial-temporal attention leads to the best emotion recognition accuracy among the design choices, indicating modeling the correlation of spatial and temporal features of EEG signals is significant to emotion recognition."
+        }
+      ],
+      "dataset": null,
+      "approach": "simultaneous spatial-temporal attention",
+      "architecture": "transformer",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "disagreements-003",
+      "claim": "Dynamic multi-scale temporal fusion outperforms feature concatenation in EEG emotion recognition, but the best-performing temporal scales differ depending on whether the task is two-class or three-class classification.",
+      "evidence": [
+        {
+          "arxiv_id": "2608.09088",
+          "source_text": "The best-performing temporal scales differ between the two tasks. Dynamic fusion outperforms concatenation in the highest-scoring two-class configuration and slightly exceeds it in the highest-scoring three-class configuration, although these multi-scale settings require substantially more computation than the full-signal baseline."
+        }
+      ],
+      "dataset": null,
+      "approach": "multi-scale temporal framework with dynamic fusion",
+      "architecture": "attention-based encoder with dynamic fusion module",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "accuracy",
+          "value": "65.22%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "45.43%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "disagreements-004",
+      "claim": "High EEG emotion recognition accuracy exceeding 90% can be maintained using as few as eight selected EEG channels, demonstrating that full high-density electrode arrays are not required for high performance.",
+      "evidence": [
+        {
+          "arxiv_id": "2212.12134",
+          "source_text": "AMDET can perform as well even with few channels which are identified by visualizing what learned model focus on. The accuracy could achieve over 90% even with only eight channels"
+        }
+      ],
+      "dataset": null,
+      "approach": "channel reduction via attention visualization",
+      "architecture": "Attention-based Multiple Dimensions EEG Transformer (AMDET)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "accuracy",
+          "value": "90%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "disagreements-005",
+      "claim": "Segment-based EEG emotion recognition methods perform well on short segments but encounter challenges in long-term continuous scenarios where trial-based processing achieves better adaptability.",
+      "evidence": [
+        {
+          "arxiv_id": "2407.20519",
+          "source_text": "Current EEG-based emotion recognition methods perform well with short segments of EEG data. However, these methods encounter significant challenges in real-life scenarios where emotional states evolve over extended periods."
+        }
+      ],
+      "dataset": null,
+      "approach": "trial-based emotion analysis",
+      "architecture": "Dual Attentive (DuA) transformer",
+      "metrics": [
+        "enhancement"
+      ],
+      "reported_values": [
+        {
+          "metric": "average enhancement",
+          "value": "5.28%"
+        }
+      ],
+      "confidence": "high"
+    }
+  ]
+}

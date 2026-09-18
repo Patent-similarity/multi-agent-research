@@ -1,0 +1,173 @@
+{
+  "sub_question_id": "approaches",
+  "findings": [
+    {
+      "claim_id": "approaches-001",
+      "claim": "Combining Neural-Gas Networks (NGN) for feature extraction with Particle Swarm Optimization (PSO), fuzzy logic, and XGBoost enhances emotion recognition performance using EEG signals.",
+      "evidence": [
+        {
+          "arxiv_id": "2407.09950",
+          "source_text": "This study explores the integration of Neural-Gas Network (NGN), XGBoost, Particle Swarm Optimization (PSO), and fuzzy logic to enhance emotion recognition using physiological signals."
+        }
+      ],
+      "dataset": null,
+      "approach": "Feature extraction and fuzzy optimization with tree-based boosting",
+      "architecture": "NGN with PSO-fuzzy XGBoost",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-002",
+      "claim": "Spatial-temporal transformer frameworks, specifically simultaneous spatial-temporal attention, effectively model the intrinsic relationships and correlations between spatial and temporal EEG features for emotion recognition.",
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "source_text": "This work proposes four variant transformer frameworks (spatial attention, temporal attention, sequential spatial-temporal attention and simultaneous spatial-temporal attention) for EEG emotion recognition"
+        }
+      ],
+      "dataset": null,
+      "approach": "Transformer-based spatial-temporal modeling",
+      "architecture": "Spatial-temporal Transformer",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-003",
+      "claim": "CIT-EmotionNet combines CNN and Transformer architectures in parallel with a dedicated interaction module to fuse local and global features from EEG spatial-frequency representations, achieving 98.57% accuracy on SEED and 92.09% on SEED-IV.",
+      "evidence": [
+        {
+          "arxiv_id": "2305.05548",
+          "source_text": "we integrate Convolutional Neural Network (CNN) and Transformer within a single framework in a parallel manner... achieving an average recognition accuracy of 98.57% and 92.09% on two publicly available datasets, SEED and SEED-IV, respectively."
+        }
+      ],
+      "dataset": "SEED, SEED-IV",
+      "approach": "Parallel CNN and Transformer interaction",
+      "architecture": "CIT-EmotionNet",
+      "metrics": [
+        "average recognition accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "average recognition accuracy on SEED",
+          "value": "98.57%"
+        },
+        {
+          "metric": "average recognition accuracy on SEED-IV",
+          "value": "92.09%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-004",
+      "claim": "The Fourier Adjacency Transformer integrates Fourier-based periodic feature extraction with graph-driven adjacency attention to capture channel correlations, yielding an accuracy improvement of approximately 6.5%.",
+      "evidence": [
+        {
+          "arxiv_id": "2503.13465",
+          "source_text": "we present the Fourier Adjacency Transformer, a novel framework that seamlessly integrates Fourier-based periodic analysis with graph-driven structural modeling... achieving an improvement of approximately 6.5% in recognition accuracy."
+        }
+      ],
+      "dataset": "SEED, DEAP",
+      "approach": "Fourier-based analysis with graph-driven transformer modeling",
+      "architecture": "Fourier Adjacency Transformer",
+      "metrics": [
+        "recognition accuracy improvement"
+      ],
+      "reported_values": [
+        {
+          "metric": "recognition accuracy improvement",
+          "value": "approximately 6.5%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-005",
+      "claim": "Systematic evaluation indicates that transfer learning approaches perform better than other machine learning methods in mitigating dataset shift for cross-subject and cross-session EEG emotion classification.",
+      "evidence": [
+        {
+          "arxiv_id": "2212.08744",
+          "source_text": "The studies with the best results in terms of average classification accuracy were identified, supporting that transfer learning methods seem to perform better than other approaches."
+        }
+      ],
+      "dataset": null,
+      "approach": "Transfer learning",
+      "architecture": null,
+      "metrics": [
+        "average classification accuracy"
+      ],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-006",
+      "claim": "A progressive graph convolution network (PGCN) using dual-graph and dual-head modules captures functional dynamic connections and spatial proximity to perform coarse-to-fine-grained EEG emotion classification.",
+      "evidence": [
+        {
+          "arxiv_id": "2112.09069",
+          "source_text": "we propose a progressive graph convolution network (PGCN) for capturing this inherent characteristic in EEG emotional signals and progressively learning the discriminative EEG features."
+        }
+      ],
+      "dataset": "SEED-IV, MPED",
+      "approach": "Graph Convolutional Network (GCN)",
+      "architecture": "Progressive Graph Convolution Network (PGCN)",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-007",
+      "claim": "The Transferable Attention Neural Network (TANN) employs local and global attention mechanisms with brain-region-level and sample-level discriminators to highlight transferable EEG regions across subjects.",
+      "evidence": [
+        {
+          "arxiv_id": "2009.09585",
+          "source_text": "we propose a transferable attention neural network (TANN) for EEG emotion recognition, which learns the emotional discriminative information by highlighting the transferable EEG brain regions data and samples adaptively through local and global attention mechanism."
+        }
+      ],
+      "dataset": null,
+      "approach": "Transferable local and global attention mechanism",
+      "architecture": "Transferable Attention Neural Network (TANN)",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-008",
+      "claim": "The locally temporal-spatial pattern learning graph attention network (LTS-GAT) uses a divide-and-conquer scheme and dynamic domain discriminator to extract local temporal-spatial patterns and handle inter-subject variations.",
+      "evidence": [
+        {
+          "arxiv_id": "2208.11087",
+          "source_text": "we proposed a locally temporal-spatial pattern learning graph attention network (LTS-GAT) in the present study. In the LTS-GAT, a divide-and-conquer scheme was used to examine local information on temporal and spatial dimensions of EEG patterns based on the graph attention mechanism."
+        }
+      ],
+      "dataset": null,
+      "approach": "Graph Attention Network (GAT) with dynamic domain adaptation",
+      "architecture": "LTS-GAT",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "approaches-009",
+      "claim": "A four-dimensional attention-based neural network (4D-aNN) combines CNNs for spectral-spatial feature extraction and BiLSTMs with temporal attention for modeling time dependencies on 4D EEG representations.",
+      "evidence": [
+        {
+          "arxiv_id": "2101.05484",
+          "source_text": "a convolutional neural network (CNN) is utilized to deal with the spectral and spatial information of the 4D representations. Moreover, a temporal attention mechanism is integrated into a bidirectional Long Short-Term Memory (LSTM) to explore temporal dependencies of the 4D representations."
+        }
+      ],
+      "dataset": "SEED",
+      "approach": "Hybrid Convolutional and Recurrent Network (CNN + BiLSTM) with multi-domain attention",
+      "architecture": "4D Attention-based Neural Network (4D-aNN)",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    }
+  ]
+}

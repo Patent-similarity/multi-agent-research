@@ -1,0 +1,125 @@
+{
+  "sub_question_id": "datasets",
+  "findings": [
+    {
+      "claim_id": "datasets-001",
+      "claim": "The DEAP dataset is evaluated using channel subsets (such as 12 channels compared to the full 32 channels) to predict emotion across four quadrants of arousal and valence.",
+      "evidence": [
+        {
+          "arxiv_id": "2510.00725",
+          "source_text": "This work examines how subsets of EEG channels from the DEAP dataset can be used for sufficiently accurate emotion prediction... achieve over 91,57% accuracy in predicting 4 quadrants (high/low per arousal and valence) with only 12 measuring points... state-of-the-art results of 96,9% with 32 channels."
+        }
+      ],
+      "dataset": "DEAP",
+      "approach": "Continuous Wavelet Transformation scaleograms with reduced channel subsets",
+      "architecture": "Vision Transformer (ViT)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "12-channel accuracy",
+          "value": "91,57%"
+        },
+        {
+          "metric": "32-channel state-of-the-art accuracy",
+          "value": "96,9%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "datasets-002",
+      "claim": "SEED, SEED-V, and DEAP are public EEG emotion datasets used to evaluate connectivity features, with DEAP focusing on arousal/valence dimensions and SEED/SEED-V covering discrete emotions.",
+      "evidence": [
+        {
+          "arxiv_id": "2004.01973",
+          "source_text": "The discrimination ability of the EEG connectivity features in emotion recognition is evaluated on three public emotion EEG datasets: SEED, SEED-V, and DEAP... classification accuracies of multimodal emotion recognition are 95.08/6.42% on the SEED dataset, 84.51/5.11% on the SEED-V dataset, and 85.34/2.90% and 86.61/3.76% for arousal and valence on the DEAP dataset, respectively."
+        }
+      ],
+      "dataset": "SEED, SEED-V, DEAP",
+      "approach": "EEG functional connectivity network feature extraction combined with eye movement and physiological signals via deep CCA",
+      "architecture": "Deep Canonical Correlation Analysis (DCCA)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "SEED accuracy",
+          "value": "95.08/6.42%"
+        },
+        {
+          "metric": "SEED-V accuracy",
+          "value": "84.51/5.11%"
+        },
+        {
+          "metric": "DEAP arousal accuracy",
+          "value": "85.34/2.90%"
+        },
+        {
+          "metric": "DEAP valence accuracy",
+          "value": "86.61/3.76%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "datasets-003",
+      "claim": "DEAP (evaluated for Arousal and Valence), SEED, and SEED-IV are benchmark EEG emotion recognition datasets used for multi-dimensional attention-based evaluation.",
+      "evidence": [
+        {
+          "arxiv_id": "2212.12134",
+          "source_text": "We conduct extensive experiments on the DEAP, SEED, and SEED-IV datasets to evaluate the performance of AMDET... Accuracy rates of 97.48%, 96.85%, 97.17%, 87.32% were achieved in the DEAP-Arousal, DEAP-Valence, SEED, and SEED-IV datasets, respectively."
+        }
+      ],
+      "dataset": "DEAP, SEED, SEED-IV",
+      "approach": "3D temporal-spectral-spatial EEG representation extraction",
+      "architecture": "Attention-based Multiple Dimensions EEG Transformer (AMDET)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "DEAP-Arousal accuracy",
+          "value": "97.48%"
+        },
+        {
+          "metric": "DEAP-Valence accuracy",
+          "value": "96.85%"
+        },
+        {
+          "metric": "SEED accuracy",
+          "value": "97.17%"
+        },
+        {
+          "metric": "SEED-IV accuracy",
+          "value": "87.32%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "datasets-004",
+      "claim": "SEED and DEAP are standard datasets used to evaluate Fourier-based periodic and graph-driven structural EEG emotion recognition models.",
+      "evidence": [
+        {
+          "arxiv_id": "2503.13465",
+          "source_text": "Empirical evaluations on SEED and DEAP datasets demonstrate that our method surpasses existing state-of-the-art techniques, achieving an improvement of approximately 6.5% in recognition accuracy."
+        }
+      ],
+      "dataset": "SEED, DEAP",
+      "approach": "Fourier-based periodic analysis integrated with graph-driven structural modeling",
+      "architecture": "Fourier Adjacency Transformer",
+      "metrics": [
+        "accuracy improvement"
+      ],
+      "reported_values": [
+        {
+          "metric": "accuracy improvement",
+          "value": "approximately 6.5%"
+        }
+      ],
+      "confidence": "high"
+    }
+  ]
+}

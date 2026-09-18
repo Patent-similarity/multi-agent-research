@@ -1,0 +1,132 @@
+{
+  "sub_question_id": "datasets",
+  "question": "Which EEG emotion-recognition datasets are used, and what are their key characteristics?",
+  "search_terms": [
+    "EEG emotion recognition dataset",
+    "EEG emotion DEAP SEED"
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2407.09950",
+      "title": "PSO Fuzzy XGBoost Classifier Boosted with Neural Gas Features on EEG Signals in Emotion Recognition",
+      "authors": [
+        "Seyed Muhammad Hossein Mousavi"
+      ],
+      "published": "2024-07-13",
+      "abstract": "Emotion recognition is the technology-driven process of identifying and categorizing human emotions from various data sources, such as facial expressions, voice patterns, body motion, and physiological signals, such as EEG. These physiological indicators, though rich in data, present challenges due to their complexity and variability, necessitating sophisticated feature selection and extraction methods. NGN, an unsupervised learning algorithm, effectively adapts to input spaces without predefined grid structures, improving feature extraction from physiological data. Furthermore, the incorporation of fuzzy logic enables the handling of fuzzy data by introducing reasoning that mimics human decision-making. The combination of PSO with XGBoost aids in optimizing model performance through efficient hyperparameter tuning and decision process optimization. This study explores the integration of Neural-Gas Network (NGN), XGBoost, Particle Swarm Optimization (PSO), and fuzzy logic to enhance emotion recognition using physiological signals. Our research addresses three critical questions concerning the improvement of XGBoost with PSO and fuzzy logic, NGN's effectiveness in feature selection, and the performance comparison of the PSO-fuzzy XGBoost classifier with standard benchmarks. Acquired results indicate that our methodologies enhance the accuracy of emotion recognition systems and outperform other feature selection techniques using the majority of classifiers, offering significant implications for both theoretical advancement and practical application in emotion recognition technology.",
+      "arxiv_url": "https://arxiv.org/abs/2407.09950"
+    },
+    {
+      "arxiv_id": "2308.05767",
+      "title": "EEG-based Emotion Style Transfer Network for Cross-dataset Emotion Recognition",
+      "authors": [
+        "Yijin Zhou",
+        "Fu Li",
+        "Yang Li",
+        "Youshuo Ji",
+        "Lijian Zhang",
+        "Yuanfang Chen",
+        "Wenming Zheng",
+        "Guangming Shi"
+      ],
+      "published": "2023-08-09",
+      "abstract": "As the key to realizing aBCIs, EEG emotion recognition has been widely studied by many researchers. Previous methods have performed well for intra-subject EEG emotion recognition. However, the style mismatch between source domain (training data) and target domain (test data) EEG samples caused by huge inter-domain differences is still a critical problem for EEG emotion recognition. To solve the problem of cross-dataset EEG emotion recognition, in this paper, we propose an EEG-based Emotion Style Transfer Network (E2STN) to obtain EEG representations that contain the content information of source domain and the style information of target domain, which is called stylized emotional EEG representations. The representations are helpful for cross-dataset discriminative prediction. Concretely, E2STN consists of three modules, i.e., transfer module, transfer evaluation module, and discriminative prediction module. The transfer module encodes the domain-specific information of source and target domains and then re-constructs the source domain's emotional pattern and the target domain's statistical characteristics into the new stylized EEG representations. In this process, the transfer evaluation module is adopted to constrain the generated representations that can more precisely fuse two kinds of complementary information from source and target domains and avoid distorting. Finally, the generated stylized EEG representations are fed into the discriminative prediction module for final classification. Extensive experiments show that the E2STN can achieve the state-of-the-art performance on cross-dataset EEG emotion recognition tasks.",
+      "arxiv_url": "https://arxiv.org/abs/2308.05767"
+    },
+    {
+      "arxiv_id": "2403.16540",
+      "title": "Enhancing Cross-Dataset EEG Emotion Recognition: A Novel Approach with Emotional EEG Style Transfer Network",
+      "authors": [
+        "Yijin Zhou",
+        "Fu Li",
+        "Yang Li",
+        "Youshuo Ji",
+        "Lijian Zhang",
+        "Yuanfang Chen"
+      ],
+      "published": "2024-03-25",
+      "abstract": "Recognizing the pivotal role of EEG emotion recognition in the development of affective Brain-Computer Interfaces (aBCIs), considerable research efforts have been dedicated to this field. While prior methods have demonstrated success in intra-subject EEG emotion recognition, a critical challenge persists in addressing the style mismatch between EEG signals from the source domain (training data) and the target domain (test data). To tackle the significant inter-domain differences in cross-dataset EEG emotion recognition, this paper introduces an innovative solution known as the Emotional EEG Style Transfer Network (E$^2$STN). The primary objective of this network is to effectively capture content information from the source domain and the style characteristics from the target domain, enabling the reconstruction of stylized EEG emotion representations. These representations prove highly beneficial in enhancing cross-dataset discriminative prediction. Concretely, E$^2$STN consists of three key modules\\textemdash transfer module, transfer evaluation module, and discriminative prediction module\\textemdash which address the domain style transfer, transfer quality evaluation, and discriminative prediction, respectively. Extensive experiments demonstrate that E$^2$STN achieves state-of-the-art performance in cross-dataset EEG emotion recognition tasks.",
+      "arxiv_url": "https://arxiv.org/abs/2403.16540"
+    },
+    {
+      "arxiv_id": "2212.08744",
+      "title": "Toward cross-subject and cross-session generalization in EEG-based emotion recognition: Systematic review, taxonomy, and methods",
+      "authors": [
+        "Andrea Apicella",
+        "Pasquale Arpaia",
+        "Giovanni D'Errico",
+        "Davide Marocco",
+        "Giovanna Mastrati",
+        "Nicola Moccaldi",
+        "Roberto Prevete"
+      ],
+      "published": "2022-12-16",
+      "abstract": "A systematic review on machine-learning strategies for improving generalizability (cross-subjects and cross-sessions) electroencephalography (EEG) based in emotion classification was realized. In this context, the non-stationarity of EEG signals is a critical issue and can lead to the Dataset Shift problem. Several architectures and methods have been proposed to address this issue, mainly based on transfer learning methods. 418 papers were retrieved from the Scopus, IEEE Xplore and PubMed databases through a search query focusing on modern machine learning techniques for generalization in EEG-based emotion assessment. Among these papers, 75 were found eligible based on their relevance to the problem. Studies lacking a specific cross-subject and cross-session validation strategy and making use of other biosignals as support were excluded. On the basis of the selected papers' analysis, a taxonomy of the studies employing Machine Learning (ML) methods was proposed, together with a brief discussion on the different ML approaches involved. The studies with the best results in terms of average classification accuracy were identified, supporting that transfer learning methods seem to perform better than other approaches. A discussion is proposed on the impact of (i) the emotion theoretical models and (ii) psychological screening of the experimental sample on the classifier performances.",
+      "arxiv_url": "https://arxiv.org/abs/2212.08744"
+    },
+    {
+      "arxiv_id": "2510.00725",
+      "title": "DEAP DIVE: Dataset Investigation with Vision transformers for EEG evaluation",
+      "authors": [
+        "Annemarie Hoffsommer",
+        "Helen Schneider",
+        "Svetlana Pavlitska",
+        "J. Marius Zöllner"
+      ],
+      "published": "2025-10-01",
+      "abstract": "Accurately predicting emotions from brain signals has the potential to achieve goals such as improving mental health, human-computer interaction, and affective computing. Emotion prediction through neural signals offers a promising alternative to traditional methods, such as self-assessment and facial expression analysis, which can be subjective or ambiguous. Measurements of the brain activity via electroencephalogram (EEG) provides a more direct and unbiased data source. However, conducting a full EEG is a complex, resource-intensive process, leading to the rise of low-cost EEG devices with simplified measurement capabilities. This work examines how subsets of EEG channels from the DEAP dataset can be used for sufficiently accurate emotion prediction with low-cost EEG devices, rather than fully equipped EEG-measurements. Using Continuous Wavelet Transformation to convert EEG data into scaleograms, we trained a vision transformer (ViT) model for emotion classification. The model achieved over 91,57% accuracy in predicting 4 quadrants (high/low per arousal and valence) with only 12 measuring points (also referred to as channels). Our work shows clearly, that a significant reduction of input channels yields high results compared to state-of-the-art results of 96,9% with 32 channels. Training scripts to reproduce our code can be found here: https://gitlab.kit.edu/kit/aifb/ATKS/public/AutoSMiLeS/DEAP-DIVE.",
+      "arxiv_url": "https://arxiv.org/abs/2510.00725"
+    },
+    {
+      "arxiv_id": "2004.01973",
+      "title": "Investigating EEG-Based Functional Connectivity Patterns for Multimodal Emotion Recognition",
+      "authors": [
+        "Xun Wu",
+        "Wei-Long Zheng",
+        "Bao-Liang Lu"
+      ],
+      "published": "2020-04-04",
+      "abstract": "Compared with the rich studies on the motor brain-computer interface (BCI), the recently emerging affective BCI presents distinct challenges since the brain functional connectivity networks involving emotion are not well investigated. Previous studies on emotion recognition based on electroencephalography (EEG) signals mainly rely on single-channel-based feature extraction methods. In this paper, we propose a novel emotion-relevant critical subnetwork selection algorithm and investigate three EEG functional connectivity network features: strength, clustering coefficient, and eigenvector centrality. The discrimination ability of the EEG connectivity features in emotion recognition is evaluated on three public emotion EEG datasets: SEED, SEED-V, and DEAP. The strength feature achieves the best classification performance and outperforms the state-of-the-art differential entropy feature based on single-channel analysis. The experimental results reveal that distinct functional connectivity patterns are exhibited for the five emotions of disgust, fear, sadness, happiness, and neutrality. Furthermore, we construct a multimodal emotion recognition model by combining the functional connectivity features from EEG and the features from eye movements or physiological signals using deep canonical correlation analysis. The classification accuracies of multimodal emotion recognition are 95.08/6.42% on the SEED dataset, 84.51/5.11% on the SEED-V dataset, and 85.34/2.90% and 86.61/3.76% for arousal and valence on the DEAP dataset, respectively. The results demonstrate the complementary representation properties of the EEG connectivity features with eye movement data. In addition, we find that the brain networks constructed with 18 channels achieve comparable performance with that of the 62-channel network in multimodal emotion recognition and enable easier setups for BCI systems in real scenarios.",
+      "arxiv_url": "https://arxiv.org/abs/2004.01973"
+    },
+    {
+      "arxiv_id": "2212.12134",
+      "title": "AMDET: Attention based Multiple Dimensions EEG Transformer for Emotion Recognition",
+      "authors": [
+        "Yongling Xu",
+        "Yang Du",
+        "Jing Zou",
+        "Tianying Zhou",
+        "Lushan Xiao",
+        "Li Liu",
+        "Pengcheng"
+      ],
+      "published": "2022-12-23",
+      "abstract": "Affective computing is an important branch of artificial intelligence, and with the rapid development of brain computer interface technology, emotion recognition based on EEG signals has received broad attention. It is still a great challenge to effectively explore the multi-dimensional information in the EEG data in spite of a large number of deep learning methods. In this paper, we propose a deep model called Attention-based Multiple Dimensions EEG Transformer (AMDET), which can exploit the complementarity among the spectral-spatial-temporal features of EEG data by employing the multi-dimensional global attention mechanism. We transformed the original EEG data into 3D temporal-spectral-spatial representations and then the AMDET would use spectral-spatial transformer encoder layer to extract effective features in the EEG signal and concentrate on the critical time frame with a temporal attention layer. We conduct extensive experiments on the DEAP, SEED, and SEED-IV datasets to evaluate the performance of AMDET and the results outperform the state-of-the-art baseline on three datasets. Accuracy rates of 97.48%, 96.85%, 97.17%, 87.32% were achieved in the DEAP-Arousal, DEAP-Valence, SEED, and SEED-IV datasets, respectively. We also conduct extensive experiments to explore the possible brain regions that influence emotions and the coupling of EEG signals. AMDET can perform as well even with few channels which are identified by visualizing what learned model focus on. The accuracy could achieve over 90% even with only eight channels and it is of great use and benefit for practical applications.",
+      "arxiv_url": "https://arxiv.org/abs/2212.12134"
+    },
+    {
+      "arxiv_id": "2503.13465",
+      "title": "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition",
+      "authors": [
+        "Jinfeng Wang",
+        "Yanhao Huang",
+        "Sifan Song",
+        "Boqian Wang",
+        "Jionglong Su",
+        "Jiaman Ding"
+      ],
+      "published": "2025-02-28",
+      "abstract": "EEG emotion recognition faces significant hurdles due to noise interference, signal nonstationarity, and the inherent complexity of brain activity which make accurately emotion classification. In this study, we present the Fourier Adjacency Transformer, a novel framework that seamlessly integrates Fourier-based periodic analysis with graph-driven structural modeling. Our method first leverages novel Fourier-inspired modules to extract periodic features from embedded EEG signals, effectively decoupling them from aperiodic components. Subsequently, we employ an adjacency attention scheme to reinforce universal inter-channel correlation patterns, coupling these patterns with their sample-based counterparts. Empirical evaluations on SEED and DEAP datasets demonstrate that our method surpasses existing state-of-the-art techniques, achieving an improvement of approximately 6.5% in recognition accuracy. By unifying periodicity and structural insights, this framework offers a promising direction for future research in EEG emotion analysis.",
+      "arxiv_url": "https://arxiv.org/abs/2503.13465"
+    }
+  ],
+  "retrieval_metadata": {
+    "queries": [
+      "EEG emotion recognition dataset",
+      "EEG emotion DEAP SEED"
+    ],
+    "num_results_raw": 30,
+    "num_results_after_dedup": 8
+  }
+}

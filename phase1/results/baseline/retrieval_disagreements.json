@@ -1,0 +1,226 @@
+{
+  "sub_question_id": "disagreements",
+  "question": "Where do studies disagree in their conclusions, reported performance, or interpretation of model effectiveness?",
+  "search_terms": [
+    "EEG emotion transformer CNN comparison",
+    "EEG emotion recognition benchmark limitations"
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2407.09950",
+      "title": "PSO Fuzzy XGBoost Classifier Boosted with Neural Gas Features on EEG Signals in Emotion Recognition",
+      "authors": [
+        "Seyed Muhammad Hossein Mousavi"
+      ],
+      "published": "2024-07-13",
+      "abstract": "Emotion recognition is the technology-driven process of identifying and categorizing human emotions from various data sources, such as facial expressions, voice patterns, body motion, and physiological signals, such as EEG. These physiological indicators, though rich in data, present challenges due to their complexity and variability, necessitating sophisticated feature selection and extraction methods. NGN, an unsupervised learning algorithm, effectively adapts to input spaces without predefined grid structures, improving feature extraction from physiological data. Furthermore, the incorporation of fuzzy logic enables the handling of fuzzy data by introducing reasoning that mimics human decision-making. The combination of PSO with XGBoost aids in optimizing model performance through efficient hyperparameter tuning and decision process optimization. This study explores the integration of Neural-Gas Network (NGN), XGBoost, Particle Swarm Optimization (PSO), and fuzzy logic to enhance emotion recognition using physiological signals. Our research addresses three critical questions concerning the improvement of XGBoost with PSO and fuzzy logic, NGN's effectiveness in feature selection, and the performance comparison of the PSO-fuzzy XGBoost classifier with standard benchmarks. Acquired results indicate that our methodologies enhance the accuracy of emotion recognition systems and outperform other feature selection techniques using the majority of classifiers, offering significant implications for both theoretical advancement and practical application in emotion recognition technology.",
+      "arxiv_url": "https://arxiv.org/abs/2407.09950"
+    },
+    {
+      "arxiv_id": "2305.05548",
+      "title": "CIT-EmotionNet: CNN Interactive Transformer Network for EEG Emotion Recognition",
+      "authors": [
+        "Wei Lu",
+        "Hua Ma",
+        "Tien-Ping Tan"
+      ],
+      "published": "2023-05-07",
+      "abstract": "Emotion recognition using Electroencephalogram (EEG) signals has emerged as a significant research challenge in affective computing and intelligent interaction. However, effectively combining global and local features of EEG signals to improve performance in emotion recognition is still a difficult task. In this study, we propose a novel CNN Interactive Transformer Network for EEG Emotion Recognition, known as CIT-EmotionNet, which efficiently integrates global and local features of EEG signals. Initially, we convert raw EEG signals into spatial-frequency representations, which serve as inputs. Then, we integrate Convolutional Neural Network (CNN) and Transformer within a single framework in a parallel manner. Finally, we design a CNN interactive Transformer module, which facilitates the interaction and fusion of local and global features, thereby enhancing the model's ability to extract both types of features from EEG spatial-frequency representations. The proposed CIT-EmotionNet outperforms state-of-the-art methods, achieving an average recognition accuracy of 98.57\\% and 92.09\\% on two publicly available datasets, SEED and SEED-IV, respectively.",
+      "arxiv_url": "https://arxiv.org/abs/2305.05548"
+    },
+    {
+      "arxiv_id": "2212.08744",
+      "title": "Toward cross-subject and cross-session generalization in EEG-based emotion recognition: Systematic review, taxonomy, and methods",
+      "authors": [
+        "Andrea Apicella",
+        "Pasquale Arpaia",
+        "Giovanni D'Errico",
+        "Davide Marocco",
+        "Giovanna Mastrati",
+        "Nicola Moccaldi",
+        "Roberto Prevete"
+      ],
+      "published": "2022-12-16",
+      "abstract": "A systematic review on machine-learning strategies for improving generalizability (cross-subjects and cross-sessions) electroencephalography (EEG) based in emotion classification was realized. In this context, the non-stationarity of EEG signals is a critical issue and can lead to the Dataset Shift problem. Several architectures and methods have been proposed to address this issue, mainly based on transfer learning methods. 418 papers were retrieved from the Scopus, IEEE Xplore and PubMed databases through a search query focusing on modern machine learning techniques for generalization in EEG-based emotion assessment. Among these papers, 75 were found eligible based on their relevance to the problem. Studies lacking a specific cross-subject and cross-session validation strategy and making use of other biosignals as support were excluded. On the basis of the selected papers' analysis, a taxonomy of the studies employing Machine Learning (ML) methods was proposed, together with a brief discussion on the different ML approaches involved. The studies with the best results in terms of average classification accuracy were identified, supporting that transfer learning methods seem to perform better than other approaches. A discussion is proposed on the impact of (i) the emotion theoretical models and (ii) psychological screening of the experimental sample on the classifier performances.",
+      "arxiv_url": "https://arxiv.org/abs/2212.08744"
+    },
+    {
+      "arxiv_id": "2407.20519",
+      "title": "DuA: Dual Attentive Transformer in Long-Term Continuous EEG Emotion Analysis",
+      "authors": [
+        "Yue Pan",
+        "Qile Liu",
+        "Qing Liu",
+        "Li Zhang",
+        "Gan Huang",
+        "Xin Chen",
+        "Fali Li",
+        "Peng Xu",
+        "Zhen Liang"
+      ],
+      "published": "2024-07-30",
+      "abstract": "Affective brain-computer interfaces (aBCIs) are increasingly recognized for their potential in monitoring and interpreting emotional states through electroencephalography (EEG) signals. Current EEG-based emotion recognition methods perform well with short segments of EEG data. However, these methods encounter significant challenges in real-life scenarios where emotional states evolve over extended periods. To address this issue, we propose a Dual Attentive (DuA) transformer framework for long-term continuous EEG emotion analysis. Unlike segment-based approaches, the DuA transformer processes an entire EEG trial as a whole, identifying emotions at the trial level, referred to as trial-based emotion analysis. This framework is designed to adapt to varying signal lengths, providing a substantial advantage over traditional methods. The DuA transformer incorporates three key modules: the spatial-spectral network module, the temporal network module, and the transfer learning module. The spatial-spectral network module simultaneously captures spatial and spectral information from EEG signals, while the temporal network module detects temporal dependencies within long-term EEG data. The transfer learning module enhances the model's adaptability across different subjects and conditions. We extensively evaluate the DuA transformer using a self-constructed long-term EEG emotion database, along with two benchmark EEG emotion databases. On the basis of the trial-based leave-one-subject-out cross-subject cross-validation protocol, our experimental results demonstrate that the proposed DuA transformer significantly outperforms existing methods in long-term continuous EEG emotion analysis, with an average enhancement of 5.28%.",
+      "arxiv_url": "https://arxiv.org/abs/2407.20519"
+    },
+    {
+      "arxiv_id": "2110.06553",
+      "title": "Spatial-temporal Transformers for EEG Emotion Recognition",
+      "authors": [
+        "Jiyao Liu",
+        "Hao Wu",
+        "Li Zhang",
+        "Yanxi Zhao"
+      ],
+      "published": "2021-10-13",
+      "abstract": "Electroencephalography (EEG) is a popular and effective tool for emotion recognition. However, the propagation mechanisms of EEG in the human brain and its intrinsic correlation with emotions are still obscure to researchers. This work proposes four variant transformer frameworks~(spatial attention, temporal attention, sequential spatial-temporal attention and simultaneous spatial-temporal attention) for EEG emotion recognition to explore the relationship between emotion and spatial-temporal EEG features. Specifically, spatial attention and temporal attention are to learn the topological structure information and time-varying EEG characteristics for emotion recognition respectively. Sequential spatial-temporal attention does the spatial attention within a one-second segment and temporal attention within one sample sequentially to explore the influence degree of emotional stimulation on EEG signals of diverse EEG electrodes in the same temporal segment. The simultaneous spatial-temporal attention, whose spatial and temporal attention are performed simultaneously, is used to model the relationship between different spatial features in different time segments. The experimental results demonstrate that simultaneous spatial-temporal attention leads to the best emotion recognition accuracy among the design choices, indicating modeling the correlation of spatial and temporal features of EEG signals is significant to emotion recognition.",
+      "arxiv_url": "https://arxiv.org/abs/2110.06553"
+    },
+    {
+      "arxiv_id": "2406.18345",
+      "title": "EmT: A Novel Transformer for Generalized Cross-subject EEG Emotion Recognition",
+      "authors": [
+        "Yi Ding",
+        "Chengxuan Tong",
+        "Shuailei Zhang",
+        "Muyun Jiang",
+        "Yong Li",
+        "Kevin Lim Jun Liang",
+        "Cuntai Guan"
+      ],
+      "published": "2024-06-26",
+      "abstract": "Integrating prior knowledge of neurophysiology into neural network architecture enhances the performance of emotion decoding. While numerous techniques emphasize learning spatial and short-term temporal patterns, there has been limited emphasis on capturing the vital long-term contextual information associated with emotional cognitive processes. In order to address this discrepancy, we introduce a novel transformer model called emotion transformer (EmT). EmT is designed to excel in both generalized cross-subject EEG emotion classification and regression tasks. In EmT, EEG signals are transformed into a temporal graph format, creating a sequence of EEG feature graphs using a temporal graph construction module (TGC). A novel residual multi-view pyramid GCN module (RMPG) is then proposed to learn dynamic graph representations for each EEG feature graph within the series, and the learned representations of each graph are fused into one token. Furthermore, we design a temporal contextual transformer module (TCT) with two types of token mixers to learn the temporal contextual information. Finally, the task-specific output module (TSO) generates the desired outputs. Experiments on four publicly available datasets show that EmT achieves higher results than the baseline methods for both EEG emotion classification and regression tasks. The code is available at https://github.com/yi-ding-cs/EmT.",
+      "arxiv_url": "https://arxiv.org/abs/2406.18345"
+    },
+    {
+      "arxiv_id": "2412.14522",
+      "title": "CwA-T: A Channelwise AutoEncoder with Transformer for EEG Abnormality Detection",
+      "authors": [
+        "Youshen Zhao",
+        "Keiji Iramina"
+      ],
+      "published": "2024-12-19",
+      "abstract": "Electroencephalogram (EEG) signals are critical for detecting abnormal brain activity, but their high dimensionality and complexity pose significant challenges for effective analysis. In this paper, we propose CwA-T, a novel framework that combines a channelwise CNN-based autoencoder with a single-head transformer classifier for efficient EEG abnormality detection. The channelwise autoencoder compresses raw EEG signals while preserving channel independence, reducing computational costs and retaining biologically meaningful features. The compressed representations are then fed into the transformer-based classifier, which efficiently models long-term dependencies to distinguish between normal and abnormal signals. Evaluated on the TUH Abnormal EEG Corpus, the proposed model achieves 85.0% accuracy, 76.2% sensitivity, and 91.2% specificity at the per-case level, outperforming baseline models such as EEGNet, Deep4Conv, and FusionCNN. Furthermore, CwA-T requires only 202M FLOPs and 2.9M parameters, making it significantly more efficient than transformer-based alternatives. The framework retains interpretability through its channelwise design, demonstrating great potential for future applications in neuroscience research and clinical practice. The source code is available at https://github.com/YossiZhao/CAE-T.",
+      "arxiv_url": "https://arxiv.org/abs/2412.14522"
+    },
+    {
+      "arxiv_id": "2206.00918",
+      "title": "MEMD-HHT based Emotion Detection from EEG using 3D CNN",
+      "authors": [
+        "Monira Islam",
+        "Tan Lee"
+      ],
+      "published": "2022-06-02",
+      "abstract": "In this study, the Multivariate Empirical Mode Decomposition (MEMD) is applied to multichannel EEG to obtain scale-aligned intrinsic mode functions (IMFs) as input features for emotion detection. The IMFs capture local signal variation related to emotion changes. Among the extracted IMFs, the high oscillatory ones are found to be significant for the intended task. The Marginal Hilbert spectrum (MHS) is computed from the selected IMFs. A 3D convolutional neural network (CNN) is adopted to perform emotion detection with spatial-temporal-spectral feature representations that are constructed by stacking the multi-channel MHS over consecutive signal segments. The proposed approach is evaluated on the publicly available DEAP database. On binary classification of valence and arousal level (high versus low), the attained accuracies are 89.25% and 86.23% respectively, which significantly outperform previously reported systems with 2D CNN and/or conventional temporal and spectral features.",
+      "arxiv_url": "https://arxiv.org/abs/2206.00918"
+    },
+    {
+      "arxiv_id": "2503.13465",
+      "title": "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition",
+      "authors": [
+        "Jinfeng Wang",
+        "Yanhao Huang",
+        "Sifan Song",
+        "Boqian Wang",
+        "Jionglong Su",
+        "Jiaman Ding"
+      ],
+      "published": "2025-02-28",
+      "abstract": "EEG emotion recognition faces significant hurdles due to noise interference, signal nonstationarity, and the inherent complexity of brain activity which make accurately emotion classification. In this study, we present the Fourier Adjacency Transformer, a novel framework that seamlessly integrates Fourier-based periodic analysis with graph-driven structural modeling. Our method first leverages novel Fourier-inspired modules to extract periodic features from embedded EEG signals, effectively decoupling them from aperiodic components. Subsequently, we employ an adjacency attention scheme to reinforce universal inter-channel correlation patterns, coupling these patterns with their sample-based counterparts. Empirical evaluations on SEED and DEAP datasets demonstrate that our method surpasses existing state-of-the-art techniques, achieving an improvement of approximately 6.5% in recognition accuracy. By unifying periodicity and structural insights, this framework offers a promising direction for future research in EEG emotion analysis.",
+      "arxiv_url": "https://arxiv.org/abs/2503.13465"
+    },
+    {
+      "arxiv_id": "2211.08880",
+      "title": "Temporal-spatial Representation Learning Transformer for EEG-based Emotion Recognition",
+      "authors": [
+        "Zhe Wang",
+        "Yongxiong Wang",
+        "Chuanfei Hu",
+        "Zhong Yin",
+        "Yu Song"
+      ],
+      "published": "2022-11-16",
+      "abstract": "Both the temporal dynamics and spatial correlations of Electroencephalogram (EEG), which contain discriminative emotion information, are essential for the emotion recognition. However, some redundant information within the EEG signals would degrade the performance. Specifically,the subjects reach prospective intense emotions for only a fraction of the stimulus duration. Besides, it is a challenge to extract discriminative features from the complex spatial correlations among a number of electrodes. To deal with the problems, we propose a transformer-based model to robustly capture temporal dynamics and spatial correlations of EEG. Especially, temporal feature extractors which share the weight among all the EEG channels are designed to adaptively extract dynamic context information from raw signals. Furthermore, multi-head self-attention mechanism within the transformers could adaptively localize the vital EEG fragments and emphasize the essential brain regions which contribute to the performance. To verify the effectiveness of the proposed method, we conduct the experiments on two public datasets, DEAP and MAHNOBHCI. The results demonstrate that the proposed method achieves outstanding performance on arousal and valence classification.",
+      "arxiv_url": "https://arxiv.org/abs/2211.08880"
+    },
+    {
+      "arxiv_id": "2212.12134",
+      "title": "AMDET: Attention based Multiple Dimensions EEG Transformer for Emotion Recognition",
+      "authors": [
+        "Yongling Xu",
+        "Yang Du",
+        "Jing Zou",
+        "Tianying Zhou",
+        "Lushan Xiao",
+        "Li Liu",
+        "Pengcheng"
+      ],
+      "published": "2022-12-23",
+      "abstract": "Affective computing is an important branch of artificial intelligence, and with the rapid development of brain computer interface technology, emotion recognition based on EEG signals has received broad attention. It is still a great challenge to effectively explore the multi-dimensional information in the EEG data in spite of a large number of deep learning methods. In this paper, we propose a deep model called Attention-based Multiple Dimensions EEG Transformer (AMDET), which can exploit the complementarity among the spectral-spatial-temporal features of EEG data by employing the multi-dimensional global attention mechanism. We transformed the original EEG data into 3D temporal-spectral-spatial representations and then the AMDET would use spectral-spatial transformer encoder layer to extract effective features in the EEG signal and concentrate on the critical time frame with a temporal attention layer. We conduct extensive experiments on the DEAP, SEED, and SEED-IV datasets to evaluate the performance of AMDET and the results outperform the state-of-the-art baseline on three datasets. Accuracy rates of 97.48%, 96.85%, 97.17%, 87.32% were achieved in the DEAP-Arousal, DEAP-Valence, SEED, and SEED-IV datasets, respectively. We also conduct extensive experiments to explore the possible brain regions that influence emotions and the coupling of EEG signals. AMDET can perform as well even with few channels which are identified by visualizing what learned model focus on. The accuracy could achieve over 90% even with only eight channels and it is of great use and benefit for practical applications.",
+      "arxiv_url": "https://arxiv.org/abs/2212.12134"
+    },
+    {
+      "arxiv_id": "2606.00815",
+      "title": "OmniEEG-Bench: A Standardized Evaluation Benchmark for EEG Foundation Models",
+      "authors": [
+        "Ziling Lu",
+        "Zongsheng Li",
+        "Xinke Shen",
+        "Kexin Lou",
+        "Yingyue Xin",
+        "Xiaoqi Chen",
+        "Shinan Wang",
+        "Xiang Chen",
+        "Jiahao Fan",
+        "Chenyu Huang",
+        "Xin Xu",
+        "Zhoujie Hou",
+        "Chen Wei",
+        "Quanying Liu"
+      ],
+      "published": "2026-05-30",
+      "abstract": "Electroencephalography (EEG) supports a variety of brain-computer interface (BCI) tasks ranging from brain-state monitoring to human-LLM interactions. EEG foundation models are emerging, but evaluation remains fragmented due to heterogeneous datasets and nconsistent task protocols. Here, we introduce OmniEEG-Bench, a unified benchmark and downstream task roadmap for EEG foundation models (FMs). It organizes evaluation of EEG FMs into six task families spanning (i) signal reliability, (ii) biometrics and disease, (iii) consciousness and state, (iv) cognition and emotion, (v) naturalistic stimulus decoding, and (vi) motor and interaction, introducing a new generation of tasks not systematically benchmarked in prior EEG FM work. OmniEEG-Bench standardizes model deployment, task definitions, and metrics through a task-card specification, and unifies 54 EEG datasets with consistent evaluation protocols. We benchmark 10 representative EEG foundation models and report a leaderboard that covers diverse evaluation settings. Both pretraining dataset diversity and model size are significantly associated with better average ranks across datasets, revealing scaling-law behavior in EEG foundation models (Figure 1). These results suggest that scaling EEG foundation models requires not only larger architectures but also broader and more diverse pretraining data. The benchmark code is available at https://github.com/ncclab-sustech/omni-eegbench.git.",
+      "arxiv_url": "https://arxiv.org/abs/2606.00815"
+    },
+    {
+      "arxiv_id": "2112.09069",
+      "title": "Progressive Graph Convolution Network for EEG Emotion Recognition",
+      "authors": [
+        "Yijin Zhou",
+        "Fu Li",
+        "Yang Li",
+        "Youshuo Ji",
+        "Guangming Shi",
+        "Wenming Zheng",
+        "Lijian Zhang",
+        "Yuanfang Chen",
+        "Rui Cheng"
+      ],
+      "published": "2021-12-14",
+      "abstract": "Studies in the area of neuroscience have revealed the relationship between emotional patterns and brain functional regions, demonstrating that dynamic relationships between different brain regions are an essential factor affecting emotion recognition determined through electroencephalography (EEG). Moreover, in EEG emotion recognition, we can observe that clearer boundaries exist between coarse-grained emotions than those between fine-grained emotions, based on the same EEG data; this indicates the concurrence of large coarse- and small fine-grained emotion variations. Thus, the progressive classification process from coarse- to fine-grained categories may be helpful for EEG emotion recognition. Consequently, in this study, we propose a progressive graph convolution network (PGCN) for capturing this inherent characteristic in EEG emotional signals and progressively learning the discriminative EEG features. To fit different EEG patterns, we constructed a dual-graph module to characterize the intrinsic relationship between different EEG channels, containing the dynamic functional connections and static spatial proximity information of brain regions from neuroscience research. Moreover, motivated by the observation of the relationship between coarse- and fine-grained emotions, we adopt a dual-head module that enables the PGCN to progressively learn more discriminative EEG features, from coarse-grained (easy) to fine-grained categories (difficult), referring to the hierarchical characteristic of emotion. To verify the performance of our model, extensive experiments were conducted on two public datasets: SEED-IV and multi-modal physiological emotion database (MPED).",
+      "arxiv_url": "https://arxiv.org/abs/2112.09069"
+    },
+    {
+      "arxiv_id": "2608.09088",
+      "title": "A Multi-Scale Temporal Framework with Dynamic Fusion for EEG-Based Emotion Recognition",
+      "authors": [
+        "Stefanos Gkikas",
+        "Yang Guo",
+        "Guangliang Li",
+        "Raul Fernandez Rojas",
+        "Giorgos Giannakakis",
+        "Randy Gomez"
+      ],
+      "published": "2026-08-10",
+      "abstract": "Mixed emotions represent a clinically relevant but still underexplored target for automatic emotion recognition. EEG provides millisecond-level access to neural activity, yet most EEG pipelines analyze the signal through a single temporal window, thereby fixing the temporal structure available to the model. This study introduces a multi-scale temporal framework for EEG-based emotion recognition. The EEG waveform is decomposed into windows of one or several durations, processed by a shared attention-based encoder, and integrated through a dynamic fusion module that assigns sample-specific weights across temporal scales. The framework is evaluated under a subject-independent protocol in binary and three-class settings, with the three-class task including the mixed affective category. The best results are 65.22% for the two-class task and 45.43% for the three-class task. Both are obtained with three-scale dynamic-fusion configurations and remain substantially above the full-signal baseline. The best-performing temporal scales differ between the two tasks. Dynamic fusion outperforms concatenation in the highest-scoring two-class configuration and slightly exceeds it in the highest-scoring three-class configuration, although these multi-scale settings require substantially more computation than the full-signal baseline.",
+      "arxiv_url": "https://arxiv.org/abs/2608.09088"
+    }
+  ],
+  "retrieval_metadata": {
+    "queries": [
+      "EEG emotion transformer CNN comparison",
+      "EEG emotion recognition benchmark limitations"
+    ],
+    "num_results_raw": 30,
+    "num_results_after_dedup": 14
+  }
+}

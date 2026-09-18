@@ -1,0 +1,229 @@
+{
+  "sub_question_id": "architectures",
+  "findings": [
+    {
+      "claim_id": "architectures-001",
+      "claim": "The PSO Fuzzy XGBoost classifier framework integrates a Neural-Gas Network (NGN) for feature extraction with Particle Swarm Optimization (PSO) and fuzzy logic for hyperparameter tuning and decision optimization.",
+      "evidence": [
+        {
+          "arxiv_id": "2407.09950",
+          "source_text": "This study explores the integration of Neural-Gas Network (NGN), XGBoost, Particle Swarm Optimization (PSO), and fuzzy logic to enhance emotion recognition using physiological signals."
+        }
+      ],
+      "dataset": null,
+      "approach": "Integration of NGN feature extraction with PSO-optimized fuzzy XGBoost classification",
+      "architecture": "Neural-Gas Network (NGN) and PSO Fuzzy XGBoost",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-002",
+      "claim": "The Dual Attentive (DuA) transformer architecture processes full long-term EEG trials using spatial-spectral, temporal, and transfer learning modules.",
+      "evidence": [
+        {
+          "arxiv_id": "2407.20519",
+          "source_text": "The DuA transformer incorporates three key modules: the spatial-spectral network module, the temporal network module, and the transfer learning module."
+        }
+      ],
+      "dataset": null,
+      "approach": "Trial-based long-term continuous EEG emotion analysis using Dual Attentive Transformer",
+      "architecture": "Dual Attentive (DuA) Transformer",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-003",
+      "claim": "The Emotion Transformer (EmT) architecture combines a Temporal Graph Construction (TGC) module, a Residual Multi-view Pyramid GCN (RMPG) module, a Temporal Contextual Transformer (TCT) module, and a Task-Specific Output (TSO) module.",
+      "evidence": [
+        {
+          "arxiv_id": "2406.18345",
+          "source_text": "In EmT, EEG signals are transformed into a temporal graph format... A novel residual multi-view pyramid GCN module (RMPG) is then proposed... Furthermore, we design a temporal contextual transformer module (TCT)... Finally, the task-specific output module (TSO) generates the desired outputs."
+        }
+      ],
+      "dataset": null,
+      "approach": "Dynamic graph representation learning and temporal contextual transformers for cross-subject EEG emotion decoding",
+      "architecture": "Emotion Transformer (EmT) with GCN and Transformer modules",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-004",
+      "claim": "Four variant Transformer architectures\u2014spatial attention, temporal attention, sequential spatial-temporal attention, and simultaneous spatial-temporal attention\u2014were designed for EEG emotion recognition, with simultaneous spatial-temporal attention performing best.",
+      "evidence": [
+        {
+          "arxiv_id": "2110.06553",
+          "source_text": "This work proposes four variant transformer frameworks~(spatial attention, temporal attention, sequential spatial-temporal attention and simultaneous spatial-temporal attention) for EEG emotion recognition"
+        }
+      ],
+      "dataset": null,
+      "approach": "Spatial-temporal Transformer variants for EEG emotion recognition",
+      "architecture": "Spatial-temporal Transformer (simultaneous, sequential, spatial, and temporal variants)",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-005",
+      "claim": "CIT-EmotionNet combines a Convolutional Neural Network (CNN) and Transformer in parallel with an interactive module to extract local and global features from spatial-frequency EEG representations.",
+      "evidence": [
+        {
+          "arxiv_id": "2305.05548",
+          "source_text": "we integrate Convolutional Neural Network (CNN) and Transformer within a single framework in a parallel manner. Finally, we design a CNN interactive Transformer module"
+        }
+      ],
+      "dataset": "SEED",
+      "approach": "Parallel CNN-Transformer interaction for joint local and global spatial-frequency feature fusion",
+      "architecture": "CIT-EmotionNet (Parallel CNN-Transformer)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "accuracy",
+          "value": "98.57%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "92.09%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-006",
+      "claim": "The Fourier Adjacency Transformer architecture integrates Fourier-inspired periodic feature extraction modules with an adjacency attention graph scheme.",
+      "evidence": [
+        {
+          "arxiv_id": "2503.13465",
+          "source_text": "Our method first leverages novel Fourier-inspired modules to extract periodic features from embedded EEG signals, effectively decoupling them from aperiodic components. Subsequently, we employ an adjacency attention scheme to reinforce universal inter-channel correlation patterns"
+        }
+      ],
+      "dataset": "SEED",
+      "approach": "Fourier periodic feature decoupling combined with graph-driven adjacency attention",
+      "architecture": "Fourier Adjacency Transformer",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "accuracy improvement",
+          "value": "6.5%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-007",
+      "claim": "A Transformer architecture utilizing channel weight-shared temporal feature extractors and multi-head self-attention adaptively captures temporal dynamics and spatial correlations in EEG signals.",
+      "evidence": [
+        {
+          "arxiv_id": "2211.08880",
+          "source_text": "temporal feature extractors which share the weight among all the EEG channels are designed to adaptively extract dynamic context information from raw signals. Furthermore, multi-head self-attention mechanism within the transformers could adaptively localize the vital EEG fragments"
+        }
+      ],
+      "dataset": "DEAP",
+      "approach": "Temporal-spatial representation learning via weight-shared temporal feature extractors and multi-head self-attention Transformer",
+      "architecture": "Transformer with channel weight-shared temporal feature extractors",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-008",
+      "claim": "The Attention-based Multiple Dimensions EEG Transformer (AMDET) employs a 3D temporal-spectral-spatial input representation processed by a spectral-spatial transformer encoder layer and a temporal attention layer.",
+      "evidence": [
+        {
+          "arxiv_id": "2212.12134",
+          "source_text": "We transformed the original EEG data into 3D temporal-spectral-spatial representations and then the AMDET would use spectral-spatial transformer encoder layer to extract effective features in the EEG signal and concentrate on the critical time frame with a temporal attention layer."
+        }
+      ],
+      "dataset": "DEAP",
+      "approach": "Multi-dimensional global attention on 3D temporal-spectral-spatial EEG representations",
+      "architecture": "Attention-based Multiple Dimensions EEG Transformer (AMDET)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "accuracy",
+          "value": "97.48%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "96.85%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "97.17%"
+        },
+        {
+          "metric": "accuracy",
+          "value": "87.32%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-009",
+      "claim": "A 3D Convolutional Neural Network (3D CNN) architecture classifies EEG emotions using spatial-temporal-spectral representations generated from Multivariate Empirical Mode Decomposition (MEMD) and Marginal Hilbert Spectrum (MHS).",
+      "evidence": [
+        {
+          "arxiv_id": "2206.00918",
+          "source_text": "A 3D convolutional neural network (CNN) is adopted to perform emotion detection with spatial-temporal-spectral feature representations that are constructed by stacking the multi-channel MHS over consecutive signal segments."
+        }
+      ],
+      "dataset": "DEAP",
+      "approach": "MEMD-HHT feature extraction coupled with 3D CNN classification",
+      "architecture": "3D Convolutional Neural Network (3D CNN)",
+      "metrics": [
+        "accuracy"
+      ],
+      "reported_values": [
+        {
+          "metric": "valence accuracy",
+          "value": "89.25%"
+        },
+        {
+          "metric": "arousal accuracy",
+          "value": "86.23%"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-010",
+      "claim": "Deep Convolutional Neural Networks (CNN) extract spatiotemporal features from EEG signals across varying window sizes and electrode orderings for emotion recognition.",
+      "evidence": [
+        {
+          "arxiv_id": "1910.09719",
+          "source_text": "In this work, a study of CNN and its spatiotemporal feature extraction has been conducted in order to explore capabilities of the model in varied window sizes and electrode orders."
+        }
+      ],
+      "dataset": null,
+      "approach": "Spatiotemporal EEG feature extraction using deep CNNs across different window sizes",
+      "architecture": "Deep Convolutional Neural Network (CNN)",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    },
+    {
+      "claim_id": "architectures-011",
+      "claim": "The EEG-based Emotion Style Transfer Network (E2STN) consists of a transfer module, a transfer evaluation module, and a discriminative prediction module to enable cross-dataset emotion recognition.",
+      "evidence": [
+        {
+          "arxiv_id": "2308.05767",
+          "source_text": "E2STN consists of three modules, i.e., transfer module, transfer evaluation module, and discriminative prediction module."
+        }
+      ],
+      "dataset": null,
+      "approach": "Style transfer network to align source emotional content and target statistical characteristics",
+      "architecture": "EEG-based Emotion Style Transfer Network (E2STN)",
+      "metrics": [],
+      "reported_values": [],
+      "confidence": "high"
+    }
+  ]
+}
