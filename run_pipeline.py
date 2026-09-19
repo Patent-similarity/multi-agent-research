@@ -5,7 +5,7 @@ from agents.llm_client import GeminiClient
 from agents.pipeline import ResearchPipeline
 
 
-INPUT = Path("phase1/output/comparison_output.json")
+INPUT = Path("phase1/results/baseline/comparison_output.json")
 OUTPUT = Path("phase1/output/final_pipeline_output.json")
 
 
