@@ -78,6 +78,40 @@ class EvidenceAgent:
 
             check["evidence"] = valid_evidence
 
+            claim_text = claim.get("claim", "").lower()
+            disagreement_claim = any(
+                term in claim_text
+                for term in (
+                    "disagreement",
+                    "disagreements",
+                    "conflict",
+                    "conflicts",
+                    "contradict",
+                    "contradicts",
+                    "contradiction",
+                )
+            )
+
+            if disagreement_claim:
+                has_disagreement_evidence = any(
+                    comparisons[evidence_ref["comparison_id"]]
+                    .get("disagreement", {})
+                    .get("present", False)
+                    for evidence_ref in valid_evidence
+                    if evidence_ref["comparison_id"] in comparisons
+                )
+
+                if not has_disagreement_evidence:
+                    check["status"] = "unsupported"
+                    check["evidence"] = []
+                    check["reason"] = (
+                        "The claim asserts a published disagreement, but none "
+                        "of its validated comparison evidence is marked as an "
+                        "actual disagreement."
+                    )
+                    validated.append(check)
+                    continue
+
             if not valid_evidence:
                 check["status"] = "unsupported"
                 check["reason"] = (
