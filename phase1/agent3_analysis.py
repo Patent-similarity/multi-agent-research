@@ -1,5 +1,5 @@
 ﻿"""
-Agent 3 â€” Analysis
+Agent 3 — Analysis
 
 Job: for one sub-question's retrieved papers (retrieval_<id>.json), read
 each paper's abstract and extract structured "findings" (claims) relevant
@@ -12,12 +12,12 @@ Hard invariants from the schema (do not relax these):
 - dataset/approach/architecture: null when missing, NEVER empty string.
 - Every finding needs >=1 evidence entry with a real arxiv_id from the
   input papers and source_text that is an actual (short) quote/paraphrase
-  grounding the claim â€” not invented.
+  grounding the claim — not invented.
 - claim_id must be unique. We assign these programmatically after the LLM
   call rather than trusting the model to generate collision-free IDs.
 
 We batch ALL papers for one sub-question into a single LLM call (not one
-call per paper) â€” much friendlier to Gemini's free-tier rate limits, and
+call per paper) — much friendlier to Gemini's free-tier rate limits, and
 still gives the model enough context to catch cross-paper patterns like
 the same dataset appearing in multiple studies.
 
@@ -71,61 +71,79 @@ def load_decomposition_question(sub_question_id: str) -> str:
 
 
 def build_prompt(sub_question_id: str, question_text: str, papers: list[dict]) -> str:
-    disagreement_rules = ""
-    if sub_question_id == "disagreements":
-        disagreement_rules = (
-            "8. DISAGREEMENT-SPECIFIC RULES:\n"
-            "   A disagreement must be a genuine conflict between findings from at least\n"
-            "   two distinct papers in the supplied paper set. Do NOT label a single paper\n"
-            "   claiming that its method outperformed a baseline as a disagreement. Every\n"
-            "   disagreement finding MUST include evidence from at least two distinct\n"
-            "   arxiv_id values. If no genuine cross-paper disagreement is supported by\n"
-            "   the supplied abstracts, return zero findings rather than forcing one.\n\n"
-        )
-
     papers_block = "\n\n".join(
         f"[Paper arxiv_id={p['arxiv_id']}]\n"
         f"Title: {p['title']}\n"
         f"Abstract: {p['abstract']}"
         for p in papers
     )
+
+    disagreement_mode_block = ""
+    if sub_question_id == "disagreements":
+        disagreement_mode_block = """
+DISAGREEMENT MODE — this sub-question works differently from the other four:
+A finding here is ONLY valid if it captures an EXPLICIT CONFLICT between at
+least 2 of the papers above — e.g. they reach opposite conclusions about the
+same comparison (one paper reports transformers outperform CNNs on a given
+dataset/setup, another reports the opposite), or give contradictory results
+for a directly comparable metric/dataset/approach combination.
+
+Do NOT extract a finding just because one paper's claim is topically about
+comparison, limitations, or disagreement in general — a single paper stating
+its own result, with no other paper here actually contradicting it, is NOT
+a disagreement. That is a normal finding and does not belong in this
+sub-question's output at all.
+
+For every finding you DO extract here:
+- evidence MUST include at least 2 entries, from at least 2 DIFFERENT
+  arxiv_ids — one entry per conflicting paper, each with that paper's own
+  actual conflicting statement as source_text.
+- claim must explicitly name and describe the conflict (e.g. "Paper A
+  reports transformer-based methods outperform CNNs on DEAP, while Paper B
+  reports the opposite finding under a comparable setup.").
+
+If no genuine cross-paper conflict exists among the papers given, the
+correct output is an EMPTY findings array. An empty list is the honest,
+correct answer when there's nothing to report — do not manufacture a
+disagreement to avoid returning zero findings.
+"""
+
     return f"""You are the Analysis agent in a locked research pipeline. Extract
 structured findings (claims) from the paper abstracts below that are
 relevant to answering this sub-question:
 
 SUB-QUESTION ({sub_question_id}): {question_text}
-
+{disagreement_mode_block}
 STRICT RULES:
 0. DOMAIN CHECK (do this first, per paper): only extract findings from a
    paper if EEG (electroencephalography) is genuinely the core signal/method
    the paper uses for emotion recognition. If a paper uses a DIFFERENT
-   modality as its actual method â€” facial expression, speech/audio, text,
-   posture/body language, multimodal-but-not-EEG-based â€” extract ZERO
+   modality as its actual method — facial expression, speech/audio, text,
+   posture/body language, multimodal-but-not-EEG-based — extract ZERO
    findings from it, even if its abstract mentions "EEG" in passing (e.g.
-   "unlike EEG-based approaches, we use..." is explicitly NOT an EEG paper â€”
+   "unlike EEG-based approaches, we use..." is explicitly NOT an EEG paper —
    that sentence is contrasting itself against EEG methods, not using EEG).
 1. Only extract claims actually supported by the abstract text given. Do
    not infer, guess, or fill in numbers/facts not present in the abstract.
 2. If a claim mentions a numeric result (accuracy, F1, etc.), it MUST be a
    number that literally appears in that paper's abstract. If the abstract
-   gives no numbers, reported_values must be an empty array â€” do not
+   gives no numbers, reported_values must be an empty array — do not
    invent a plausible-sounding number.
 3. Every finding needs at least one evidence entry: the arxiv_id of the
    source paper (must match one of the arxiv_ids given below, verbatim)
    and source_text (a short quote or close paraphrase from that abstract
-   grounding the claim â€” a few words to one sentence, not the whole abstract).
+   grounding the claim — a few words to one sentence, not the whole abstract).
 4. dataset / approach / architecture: use null (JSON null) if the abstract
    doesn't specify it. NEVER use an empty string "" for missing values.
 5. confidence: "high" if the abstract states this directly and
    unambiguously, "medium" if it's a reasonable reading but not fully
    explicit, "low" if it's a weak/indirect signal.
 6. It's fine to extract 0 findings from a paper if its abstract has
-   nothing relevant to this specific sub-question â€” don't force it.
-7. Set claim_id to the string "PLACEHOLDER" for every finding â€” the
+   nothing relevant to this specific sub-question — don't force it.
+7. Set claim_id to the string "PLACEHOLDER" for every finding — the
    calling code assigns real unique IDs afterward. Do not try to make
    claim_id unique yourself.
 
-{disagreement_rules}
 PAPERS:
 {papers_block}
 
@@ -156,7 +174,7 @@ def call_analysis_llm(prompt: str) -> dict:
         model=MODEL,
         contents=prompt,
         config=types.GenerateContentConfig(
-            temperature=0.2,  # low â€” this is extraction, not creative generation
+            temperature=0.2,  # low — this is extraction, not creative generation
             max_output_tokens=8000,  # 15 papers' worth of findings needs real headroom
             response_mime_type="application/json",
         ),
@@ -166,7 +184,7 @@ def call_analysis_llm(prompt: str) -> dict:
         cleaned = strip_code_fences(raw_text)
         return json.loads(cleaned)
     except json.JSONDecodeError as e:
-        # Surface the actual response instead of just "Expecting value" â€”
+        # Surface the actual response instead of just "Expecting value" —
         # can't debug a parse failure without seeing what was actually returned.
         preview = raw_text[:500] if raw_text else "(empty response)"
         finish_reason = None
@@ -188,10 +206,35 @@ def assign_claim_ids(payload: dict, sub_question_id: str) -> dict:
     return payload
 
 
+def validate_disagreement_evidence_diversity(payload: dict, sub_question_id: str) -> list[str]:
+    """Structural guardrail specific to the 'disagreements' sub-question,
+    agreed with swayam: a genuine disagreement finding must cite >=2
+    DISTINCT arxiv_ids in its evidence (one conflicting paper isn't a
+    disagreement). This is necessary but not sufficient — it can't verify
+    the sources actually CONFLICT, only that the model didn't emit a
+    single-paper claim dressed up as a disagreement. swayam's Evidence
+    Agent keeps the same >=2-distinct-source check as an independent
+    safety net downstream; this catches the same failure mode earlier,
+    at the source, so bad findings don't even leave Agent 3."""
+    if sub_question_id != "disagreements":
+        return []
+
+    problems = []
+    for finding in payload.get("findings", []):
+        distinct_ids = {ev["arxiv_id"] for ev in finding.get("evidence", [])}
+        if len(distinct_ids) < 2:
+            problems.append(
+                f"claim_id={finding.get('claim_id')}: disagreement finding cites "
+                f"{len(distinct_ids)} distinct arxiv_id(s), needs >=2 — a single "
+                f"paper's own claim is not a disagreement"
+            )
+    return problems
+
+
 def validate_evidence_arxiv_ids(payload: dict, valid_arxiv_ids: set[str]) -> list[str]:
     """Extra guardrail beyond jsonschema: catch the model citing an
     arxiv_id that wasn't actually in the input papers (hallucinated
-    evidence source) â€” jsonschema can't check this, only we can."""
+    evidence source) — jsonschema can't check this, only we can."""
     problems = []
     for finding in payload.get("findings", []):
         for ev in finding.get("evidence", []):
@@ -202,27 +245,6 @@ def validate_evidence_arxiv_ids(payload: dict, valid_arxiv_ids: set[str]) -> lis
                 )
     return problems
 
-def validate_disagreement_evidence(payload: dict) -> list[str]:
-    """For disagreement findings, require evidence from at least two
-    distinct papers. This enforces the Phase 0 cross-paper rule
-    programmatically rather than relying on the LLM prompt alone."""
-    if payload.get("sub_question_id") != "disagreements":
-        return []
-
-    problems = []
-    for finding in payload.get("findings", []):
-        arxiv_ids = {
-            ev.get("arxiv_id")
-            for ev in finding.get("evidence", [])
-            if ev.get("arxiv_id")
-        }
-        if len(arxiv_ids) < 2:
-            problems.append(
-                f"claim_id={finding.get('claim_id')}: disagreement finding "
-                f"must cite at least two distinct arxiv_id values, found "
-                f"{len(arxiv_ids)}"
-            )
-    return problems
 
 def run_for_sub_question(sub_question_id: str) -> dict:
     retrieval_path = OUTPUT_DIR / f"retrieval_{sub_question_id}.json"
@@ -252,10 +274,11 @@ def run_for_sub_question(sub_question_id: str) -> dict:
                     + "\n  - ".join(hallucination_errors)
                 )
 
-            disagreement_errors = validate_disagreement_evidence(payload)
+            disagreement_errors = validate_disagreement_evidence_diversity(payload, sub_question_id)
             if disagreement_errors:
                 raise ValueError(
-                    "Invalid disagreement findings:\n  - "
+                    "Disagreement finding(s) don't cite >=2 distinct papers "
+                    "(a single paper's claim isn't a disagreement):\n  - "
                     + "\n  - ".join(disagreement_errors)
                 )
 
@@ -265,13 +288,13 @@ def run_for_sub_question(sub_question_id: str) -> dict:
             if empty_string_errors:
                 raise ValueError(
                     "Found empty string where null was expected (schema alone won't "
-                    "catch this â€” it's a load-bearing rule per Phase 0):\n  - "
+                    "catch this — it's a load-bearing rule per Phase 0):\n  - "
                     + "\n  - ".join(empty_string_errors)
                 )
 
             validate_or_raise(payload, "analysis_to_comparison.json")
             break
-        except Exception as e:  # noqa: BLE001 â€” retry once, then surface
+        except Exception as e:  # noqa: BLE001 — retry once, then surface
             last_error = e
             payload = None
             continue
@@ -307,4 +330,3 @@ if __name__ == "__main__":
     else:
         print(f"Unknown sub_question_id '{arg}'. Must be one of {SUB_QUESTION_IDS} or --all")
         sys.exit(1)
-
