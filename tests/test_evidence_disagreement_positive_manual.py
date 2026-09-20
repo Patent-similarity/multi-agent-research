@@ -15,7 +15,11 @@ class FakeLLM:
                         {
                             "comparison_id": "cmp_030",
                             "arxiv_id": "mock-030",
-                        }
+                        },
+                        {
+                            "comparison_id": "cmp_031",
+                            "arxiv_id": "mock-031",
+                        },
                     ],
                     "reason": "The disagreement evidence is supported.",
                 }
@@ -39,17 +43,51 @@ comparison_input = {
             "evidence": [
                 {
                     "arxiv_id": "mock-030",
-                    "title": "Mock Disagreement Study",
-                    "source_text": "Mock evidence describing the methodological disagreement.",
-                }
+                    "title": "Mock Disagreement Study A",
+                    "source_text": "Mock evidence describing one methodological position.",
+                },
+                {
+                    "arxiv_id": "mock-032",
+                    "title": "Mock Disagreement Study B",
+                    "source_text": "Mock evidence describing a conflicting methodological position.",
+                },
             ],
             "comparison_group": None,
             "disagreement": {
                 "present": True,
-                "description": "A genuine methodological disagreement is documented.",
+                "description": "Study A reports one methodological choice.",
             },
             "confidence": "high",
-        }
+        },
+        {
+            "comparison_id": "cmp_031",
+            "source_claim_id": "disagreements-002",
+            "sub_question_id": "disagreements",
+            "claim": "Study B reports a different methodological choice.",
+            "approach": "end-to-end learning",
+            "dataset": None,
+            "architecture": None,
+            "metrics": ["accuracy"],
+            "reported_performance": [],
+            "evidence": [
+                {
+                    "arxiv_id": "mock-031",
+                    "title": "Mock Disagreement Study B",
+                    "source_text": "Mock evidence describing a different methodological position.",
+                },
+                {
+                    "arxiv_id": "mock-033",
+                    "title": "Mock Disagreement Study C",
+                    "source_text": "Mock evidence describing another conflicting methodological position.",
+                },
+            ],
+            "comparison_group": None,
+            "disagreement": {
+                "present": True,
+                "description": "Study B reports a different methodological choice.",
+            },
+            "confidence": "high",
+        },
     ],
 }
 
@@ -64,7 +102,7 @@ draft = {
                 "Published studies exhibit disagreements about "
                 "methodological choices."
             ),
-            "supporting_comparison_ids": ["cmp_030"],
+            "supporting_comparison_ids": ["cmp_030", "cmp_031"],
         }
     ],
     "report": (
@@ -85,7 +123,11 @@ assert check["evidence"] == [
     {
         "comparison_id": "cmp_030",
         "arxiv_id": "mock-030",
-    }
+    },
+    {
+        "comparison_id": "cmp_031",
+        "arxiv_id": "mock-031",
+    },
 ]
 
 print("Positive disagreement evidence test passed.")

@@ -45,8 +45,8 @@ comparison_input = {
             ],
             "comparison_group": "transformer",
             "disagreement": {
-                "present": False,
-                "description": None,
+                "present": True,
+                "description": "Mock disagreement finding backed by one paper.",
             },
             "confidence": "high",
         }

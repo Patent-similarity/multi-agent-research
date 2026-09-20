@@ -1,9 +1,28 @@
 """Evidence agent: verifies synthesis claims against comparison data."""
 
 import json
-
+import re
 from agents.llm_client import parse_json_response
 
+def is_explicit_comparison(claim: str) -> bool:
+    text = claim.lower()
+
+    patterns = (
+        r"\boutperforms?\b",
+        r"\b(?:performs?\s+)?(?:better|worse)\s+than\b",
+        r"\b(?:higher|lower)\s+\w+(?:\s+\w+){0,3}\s+than\b",
+        r"\b(?:superior|inferior)\s+to\b",
+        r"\bmore\s+\w+\s+than\b",
+        r"\bless\s+\w+\s+than\b",
+        r"\bcompared\s+to\b",
+        r"\bcompared\s+with\b",
+        r"\bimproves?\s+(?:over|upon)\b",
+        r"\bperform(?:s|ing)?\s+best\b",
+        r"\bachieve\s+(?:the\s+)?best\s+performance\b",
+        r"\bbetter\s+\w+\b",
+    )
+
+    return any(re.search(pattern, text) for pattern in patterns)
 
 class EvidenceAgent:
     """Check synthesis claims against the original comparison data."""
@@ -84,6 +103,7 @@ class EvidenceAgent:
                 for term in (
                     "disagreement",
                     "disagreements",
+                    "disagree",
                     "conflict",
                     "conflicts",
                     "contradict",
@@ -93,21 +113,55 @@ class EvidenceAgent:
             )
 
             if disagreement_claim:
-                has_disagreement_evidence = any(
-                    comparisons[evidence_ref["comparison_id"]]
-                    .get("disagreement", {})
-                    .get("present", False)
+                invalid_disagreement_evidence = []
+
+                for evidence_ref in valid_evidence:
+                    comparison_id = evidence_ref.get("comparison_id")
+                    row = comparisons.get(comparison_id)
+
+                    if not row:
+                        continue
+
+                    if not row.get("disagreement", {}).get("present", False):
+                        continue
+
+                    row_arxiv_ids = {
+                        evidence.get("arxiv_id")
+                        for evidence in (row.get("evidence") or [])
+                        if evidence.get("arxiv_id")
+                    }
+
+                    if len(row_arxiv_ids) < 2:
+                        invalid_disagreement_evidence.append(comparison_id)
+
+                if invalid_disagreement_evidence:
+                    check["status"] = "unsupported"
+                    check["evidence"] = []
+                    check["reason"] = (
+                        "The claim asserts a published disagreement, but at "
+                        "least one disagreement-marked comparison finding is "
+                        "supported by fewer than two distinct arXiv sources: "
+                        + ", ".join(invalid_disagreement_evidence)
+                    )
+                    validated.append(check)
+                    continue
+
+            if is_explicit_comparison(claim.get("claim", "")):
+                has_comparative_evidence = any(
+                    is_explicit_comparison(
+                        comparisons[evidence_ref["comparison_id"]].get("claim", "")
+                    )
                     for evidence_ref in valid_evidence
                     if evidence_ref["comparison_id"] in comparisons
                 )
 
-                if not has_disagreement_evidence:
+                if not has_comparative_evidence:
                     check["status"] = "unsupported"
                     check["evidence"] = []
                     check["reason"] = (
-                        "The claim asserts a published disagreement, but none "
-                        "of its validated comparison evidence is marked as an "
-                        "actual disagreement."
+                        "The claim makes an explicit comparative assertion, "
+                        "but none of its validated comparison evidence states "
+                        "that comparative relationship."
                     )
                     validated.append(check)
                     continue
