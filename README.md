@@ -21,6 +21,8 @@ Agents 1–4 (Planner, Retrieval, Analysis, Comparison) retrieve and structure a
 
 Agents 5–7 (Synthesis, Evidence, Critic) synthesize the research report and run a bounded revision loop. Unsupported or partially supported claims are flagged by the Critic and passed back to Synthesis for revision. Evidence and Critic then re-check the revised draft. The loop stops when the report is accepted or the revision cap is reached, in which case remaining flags are shipped with the report.
 
+> **Validated on a live run:** Synthesis independently generated an overclaimed disagreement statement citing single-source evidence; the verification loop caught it, flagged it, and removed it — with no prior injection or stubbing. See `findings.md` §16 for the full trace.
+
 ## Research Baseline
 
 The retrieval, analysis, and comparison pipeline has a **frozen 22-paper baseline** used as the canonical input for downstream validation.
@@ -53,7 +55,7 @@ Several failure modes were identified and addressed during development:
 * Evidence validation must independently validate comparison and arXiv references.
 * Malformed comparison data can lead to incorrect evidence verification if structural validation is not applied.
 * Explicit comparative claims require explicit comparative evidence rather than merely citing two unrelated studies.
-* Claims describing published disagreement require disagreement evidence supported by at least two distinct arXiv sources.
+* Claims describing published disagreement require disagreement evidence with provenance from at least two distinct arXiv sources.
 * Agent 3 disagreement extraction was tightened so that a disagreement finding must represent an explicit cross-paper conflict rather than a single-paper claim.
 * The revision loop is bounded and records each revision in the revision log.
 
@@ -159,11 +161,11 @@ Evidence validation includes structural checks for:
 
 ### Phase 3 — Revision Loop
 
-**Implemented; deterministic validation complete**
+**Complete — validated deterministically and against a live run**
 
 The bounded revision loop, revision logging, full-draft retry behavior, and ship-with-flags path are implemented and covered by deterministic tests.
 
-A fresh live end-to-end run against the frozen baseline remains pending because the Gemini Free Tier API quota was exhausted during validation.
+A fresh live end-to-end run against the frozen baseline has been completed. Synthesis independently generated a disagreement claim citing single-source comparison rows (`cmp-030`–`cmp-034`); Evidence correctly marked it unsupported, Critic flagged it, Synthesis removed it on revision, and the run finished as `revised_and_accepted`. This is an organically-generated failure caught and corrected end-to-end on real data, not a synthetic or injected test case. See `findings.md` (§16) for the full revision-log detail.
 
 ### Phase 4 — Robustness
 
