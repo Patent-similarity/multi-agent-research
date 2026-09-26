@@ -2,7 +2,9 @@
 
 import json
 import re
+
 from agents.llm_client import parse_json_response
+
 
 def is_explicit_comparison(claim: str) -> bool:
     text = claim.lower()
@@ -22,13 +24,96 @@ def is_explicit_comparison(claim: str) -> bool:
         r"\bbetter\s+\w+\b",
     )
 
-    return any(re.search(pattern, text) for pattern in patterns)
+    if any(re.search(pattern, text) for pattern in patterns):
+        return True
+
+    # Detect implicit comparisons where multiple models/entities
+    # are reported with quantitative performance values.
+    quantitative_model_pattern = (
+        r"\b(?:model|transformer|cnn|rnn|lstm|gru|gcn|graph|"
+        r"network|architecture|classifier)\b"
+        r".{0,100}?\b\d+(?:\.\d+)?\s*%"
+    )
+
+    quantitative_matches = re.findall(
+        quantitative_model_pattern,
+        text,
+    )
+
+    return len(quantitative_matches) >= 2
 
 class EvidenceAgent:
     """Check synthesis claims against the original comparison data."""
 
     def __init__(self, llm_client):
         self.llm = llm_client
+
+    def _validate_response_structure(self, result: dict) -> None:
+        """Reject malformed LLM evidence responses before semantic validation."""
+
+        if not isinstance(result, dict):
+            raise ValueError("Evidence response must be a JSON object.")
+
+        claim_checks = result.get("claim_checks")
+
+        if not isinstance(claim_checks, list):
+            raise ValueError("Evidence response claim_checks must be a list.")
+
+        allowed_statuses = {
+            "supported",
+            "partially_supported",
+            "unsupported",
+        }
+
+        for check in claim_checks:
+            if not isinstance(check, dict):
+                raise ValueError("Each evidence claim check must be an object.")
+
+            claim_id = check.get("claim_id")
+            if not isinstance(claim_id, str) or not claim_id.strip():
+                raise ValueError(
+                    "Evidence claim_check claim_id must be a non-empty string."
+                )
+
+            status = check.get("status")
+            if status not in allowed_statuses:
+                raise ValueError(
+                    "Evidence claim_check status must be one of: "
+                    "supported, partially_supported, unsupported."
+                )
+
+            evidence = check.get("evidence")
+            if not isinstance(evidence, list):
+                raise ValueError(
+                    "Evidence claim_check evidence must be a list."
+                )
+
+            reason = check.get("reason")
+            if not isinstance(reason, str):
+                raise ValueError(
+                    "Evidence claim_check reason must be a string."
+                )
+
+            for evidence_ref in evidence:
+                if not isinstance(evidence_ref, dict):
+                    raise ValueError(
+                        "Each evidence reference must be an object."
+                    )
+
+                comparison_id = evidence_ref.get("comparison_id")
+                if (
+                    not isinstance(comparison_id, str)
+                    or not comparison_id.strip()
+                ):
+                    raise ValueError(
+                        "Evidence comparison_id must be a non-empty string."
+                    )
+
+                arxiv_id = evidence_ref.get("arxiv_id")
+                if not isinstance(arxiv_id, str) or not arxiv_id.strip():
+                    raise ValueError(
+                        "Evidence arxiv_id must be a non-empty string."
+                    )
 
     def _validate_claim_checks(
         self,
@@ -149,7 +234,9 @@ class EvidenceAgent:
             if is_explicit_comparison(claim.get("claim", "")):
                 has_comparative_evidence = any(
                     is_explicit_comparison(
-                        comparisons[evidence_ref["comparison_id"]].get("claim", "")
+                        comparisons[evidence_ref["comparison_id"]].get(
+                            "claim", ""
+                        )
                     )
                     for evidence_ref in valid_evidence
                     if evidence_ref["comparison_id"] in comparisons
@@ -237,6 +324,7 @@ Return exactly this structure:
         )
 
         result = parse_json_response(response)
+        self._validate_response_structure(result)
 
         result["draft_id"] = draft["draft_id"]
 

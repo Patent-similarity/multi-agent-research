@@ -10,9 +10,92 @@ class SynthesisAgent:
     def __init__(self, llm_client):
         self.llm = llm_client
 
+    @staticmethod
+    def _validate_draft(draft: dict, comparison_ids: set[str]) -> dict:
+        """Validate the structural contract of a synthesis draft."""
+
+        if not isinstance(draft, dict):
+            raise RuntimeError("Synthesis output must be a JSON object.")
+
+        claims = draft.get("claims")
+        if not isinstance(claims, list):
+            raise RuntimeError("Synthesis output must contain a claims list.")
+
+        report = draft.get("report")
+        if not isinstance(report, str):
+            raise RuntimeError("Synthesis output must contain a report string.")
+
+        draft_id = draft.get("draft_id")
+        if not isinstance(draft_id, str) or not draft_id.strip():
+            raise RuntimeError("Synthesis output must contain a non-empty draft_id.")
+
+        for index, claim in enumerate(claims):
+            if not isinstance(claim, dict):
+                raise RuntimeError(
+                    f"Synthesis claim at index {index} must be a JSON object."
+                )
+
+            claim_id = claim.get("claim_id")
+            if not isinstance(claim_id, str) or not claim_id.strip():
+                raise RuntimeError(
+                    f"Synthesis claim at index {index} must contain a non-empty claim_id."
+                )
+
+            claim_text = claim.get("claim")
+            if not isinstance(claim_text, str) or not claim_text.strip():
+                raise RuntimeError(
+                    f"Synthesis claim '{claim_id}' must contain non-empty claim text."
+                )
+
+            supporting_ids = claim.get("supporting_comparison_ids")
+            if not isinstance(supporting_ids, list):
+                raise RuntimeError(
+                    f"Synthesis claim '{claim_id}' must contain "
+                    "supporting_comparison_ids as a list."
+                )
+
+            for comparison_id in supporting_ids:
+                if not isinstance(comparison_id, str) or not comparison_id.strip():
+                    raise RuntimeError(
+                        f"Synthesis claim '{claim_id}' contains an invalid "
+                        "supporting comparison_id."
+                    )
+
+                if comparison_id not in comparison_ids:
+                    raise RuntimeError(
+                        f"Synthesis claim '{claim_id}' references unknown "
+                        f"comparison_id '{comparison_id}'."
+                    )
+
+        return draft
+
+    @staticmethod
+    def _comparison_ids(comparison) -> set[str]:
+        """Extract valid comparison IDs from comparison data."""
+
+        if not isinstance(comparison, list):
+            raise RuntimeError("Comparison data must be a list.")
+
+        comparison_ids = set()
+
+        for index, row in enumerate(comparison):
+            if not isinstance(row, dict):
+                raise RuntimeError(
+                    f"Comparison row at index {index} must be a JSON object."
+                )
+
+            comparison_id = row.get("comparison_id")
+
+            if isinstance(comparison_id, str) and comparison_id.strip():
+                comparison_ids.add(comparison_id)
+
+        return comparison_ids
+
     def build(self, comparison_input: dict) -> dict:
         research_question = comparison_input["research_question"]
         comparison = comparison_input["comparison"]
+
+        comparison_ids = self._comparison_ids(comparison)
 
         prompt = f"""
 You are the synthesis agent in a multi-agent research pipeline.
@@ -50,10 +133,17 @@ Return exact structure with research_question, draft_id, claims[{{claim_id, clai
         if not draft.get("draft_id"):
             draft["draft_id"] = str(uuid.uuid4())
 
-        return draft
+        return self._validate_draft(draft, comparison_ids)
 
     def revise(self, draft: dict, revision_instructions: dict) -> dict:
         """Revise only claims explicitly identified by the critic."""
+
+        comparison_ids = {
+            comparison_id
+            for claim in draft.get("claims", [])
+            for comparison_id in claim.get("supporting_comparison_ids", [])
+            if isinstance(comparison_id, str)
+        }
 
         prompt = f"""
 You are the revision stage of a research synthesis pipeline.
@@ -103,4 +193,11 @@ Return the same structure as the original draft:
         revised["research_question"] = draft["research_question"]
         revised["draft_id"] = draft["draft_id"]
 
-        return revised
+        validated = self._validate_draft(revised, comparison_ids)
+
+        if validated["draft_id"] != draft["draft_id"]:
+            raise RuntimeError(
+                "Synthesis revision changed the original draft_id."
+            )
+
+        return validated

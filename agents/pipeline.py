@@ -10,6 +10,38 @@ from agents.revision_log import create_revision_row, derive_run_outcome
 from agents.synthesis_agent import SynthesisAgent
 
 
+class PipelineExecutionError(RuntimeError):
+    """Raised when a pipeline stage fails with execution context."""
+
+    def __init__(
+        self,
+        *,
+        run_id: str | None,
+        revision_number: int | None,
+        stage: str,
+        original_error: Exception,
+    ):
+        self.run_id = run_id
+        self.revision_number = revision_number
+        self.stage = stage
+        self.original_error = original_error
+
+        context = [
+            f"stage={stage}",
+        ]
+
+        if run_id is not None:
+            context.append(f"run_id={run_id}")
+
+        if revision_number is not None:
+            context.append(f"revision={revision_number}")
+
+        super().__init__(
+            "Pipeline stage failed "
+            f"({', '.join(context)}): {original_error}"
+        )
+
+
 class ResearchPipeline:
     """Run Synthesis -> Evidence -> Critic -> Revision."""
 
@@ -18,20 +50,61 @@ class ResearchPipeline:
         self.evidence = EvidenceAgent(llm_client)
         self.critic = CriticAgent(llm_client)
 
+    @staticmethod
+    def _raise_stage_error(
+        *,
+        run_id: str | None,
+        revision_number: int | None,
+        stage: str,
+        exc: Exception,
+    ) -> None:
+        """Raise a contextual pipeline error while preserving the cause."""
+
+        raise PipelineExecutionError(
+            run_id=run_id,
+            revision_number=revision_number,
+            stage=stage,
+            original_error=exc,
+        ) from exc
+
     def run_once(self, comparison_input: dict) -> dict:
         """Run one Synthesis -> Evidence -> Critic pass."""
 
-        draft = self.synthesis.build(comparison_input)
+        try:
+            draft = self.synthesis.build(comparison_input)
+        except Exception as exc:
+            self._raise_stage_error(
+                run_id=None,
+                revision_number=None,
+                stage="synthesis",
+                exc=exc,
+            )
 
-        evidence_result = self.evidence.check(
-            draft,
-            comparison_input,
-        )
+        try:
+            evidence_result = self.evidence.check(
+                draft,
+                comparison_input,
+            )
+        except Exception as exc:
+            self._raise_stage_error(
+                run_id=None,
+                revision_number=None,
+                stage="evidence",
+                exc=exc,
+            )
 
-        critic_result = self.critic.evaluate(
-            draft,
-            evidence_result,
-        )
+        try:
+            critic_result = self.critic.evaluate(
+                draft,
+                evidence_result,
+            )
+        except Exception as exc:
+            self._raise_stage_error(
+                run_id=None,
+                revision_number=None,
+                stage="critic",
+                exc=exc,
+            )
 
         return {
             "draft": draft,
@@ -92,18 +165,42 @@ class ResearchPipeline:
         run_id = str(uuid.uuid4())
         revision_rows = []
 
-        draft = self.synthesis.build(comparison_input)
+        try:
+            draft = self.synthesis.build(comparison_input)
+        except Exception as exc:
+            self._raise_stage_error(
+                run_id=run_id,
+                revision_number=0,
+                stage="synthesis",
+                exc=exc,
+            )
 
         for revision_number in range(3):
-            evidence_result = self.evidence.check(
-                draft,
-                comparison_input,
-            )
+            try:
+                evidence_result = self.evidence.check(
+                    draft,
+                    comparison_input,
+                )
+            except Exception as exc:
+                self._raise_stage_error(
+                    run_id=run_id,
+                    revision_number=revision_number,
+                    stage="evidence",
+                    exc=exc,
+                )
 
-            critic_result = self.critic.evaluate(
-                draft,
-                evidence_result,
-            )
+            try:
+                critic_result = self.critic.evaluate(
+                    draft,
+                    evidence_result,
+                )
+            except Exception as exc:
+                self._raise_stage_error(
+                    run_id=run_id,
+                    revision_number=revision_number,
+                    stage="critic",
+                    exc=exc,
+                )
 
             flags = critic_result.get("flags", [])
 
@@ -131,9 +228,16 @@ class ResearchPipeline:
                 }
 
             if revision_number == 2:
+                final_flagged_claim_ids = {
+                    flag["claim_id"]
+                    for flag in critic_result["flags"]
+                }
+
                 for row in revision_rows:
-                    row["resolved"] = False
-                    row["final_status"] = "shipped_with_flag"
+                    if row["claim_id"] in final_flagged_claim_ids:
+                        row["resolved"] = False
+                        row["final_status"] = "shipped_with_flag"
+
 
                 outcome = derive_run_outcome(
                     revision_rows,
@@ -164,15 +268,33 @@ class ResearchPipeline:
                 for claim in draft["claims"]
             }
 
-            draft = self.synthesis.revise(
-                draft,
-                revision_instructions,
-            )
+            try:
+                draft = self.synthesis.revise(
+                    draft,
+                    revision_instructions,
+                )
+            except Exception as exc:
+                self._raise_stage_error(
+                    run_id=run_id,
+                    revision_number=revision_number + 1,
+                    stage="revision",
+                    exc=exc,
+                )
 
             after_claims = {
                 claim["claim_id"]: claim["claim"]
                 for claim in draft["claims"]
             }
+
+            current_flagged_claim_ids = {
+                flag["claim_id"]
+                for flag in flags
+            }
+
+            for row in revision_rows:
+                if row["claim_id"] not in current_flagged_claim_ids:
+                    row["resolved"] = True
+                    row["final_status"] = "revised"
 
             for flag in flags:
                 claim_id = flag["claim_id"]
