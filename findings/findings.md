@@ -230,7 +230,7 @@ The canonical Phase 2 integration run used the frozen Phase 1 comparison data.
 ### Final validation result
 
 | Metric                       |       Result |
-| ---------------------------- | -----------: |
+| ----------------------------- | -----------: |
 | Claims generated             |        **7** |
 | Claims supported by Evidence |    **7 / 7** |
 | Critic flags                 |        **0** |
@@ -308,7 +308,7 @@ The pipeline followed this sequence:
 ### Measured result
 
 | Metric                        |                   Result |
-| ----------------------------- | -----------------------: |
+| ------------------------------ | -----------------------: |
 | Initial incorrect value       |               **99.99%** |
 | Verified value after revision |               **87.32%** |
 | Revision count                |                    **1** |
@@ -345,7 +345,7 @@ If the claim is still flagged after the second revision, the pipeline does not a
 ### Retry behavior
 
 | Stage         | Result                 |
-| ------------- | ---------------------- |
+| -------------- | ---------------------- |
 | Initial draft | Flagged                |
 | Revision 1    | Still flagged          |
 | Revision 2    | Still flagged          |
@@ -376,7 +376,9 @@ The shared-baseline agreement with Ayush established that the frozen dataset wou
 
 ---
 
-# PHASE 4 — Post-Baseline Validation
+# PHASE 2/3 — Guard Correction & Provenance Validation
+
+*(This section covers corrections to the disagreement/comparative guards introduced during Phase 2/3 verification-loop work. It is grouped separately from Phase 4 below, which covers infrastructure-level robustness — API failures, malformed responses, and pipeline-orchestration bugs — a distinct category of work on a different part of the system.)*
 
 ## 14. Agent 3 disagreement extraction was tightened using provenance validation
 
@@ -387,7 +389,7 @@ This led to an upstream correction in Agent 3: the disagreement extraction rule 
 The corrected Agent 3 output was regenerated separately from the frozen baseline:
 
 | Experimental disagreement output | Result |
-| --------------------------------- | -----: |
+| ---------------------------------- | -----: |
 | Disagreement findings             |  **0** |
 | Comparison rows                   | **29** |
 | Rows marked as disagreements      |  **0** |
@@ -404,13 +406,13 @@ A regression test was constructed by loading the frozen comparison data, reconst
 
 Under the current Evidence Agent, this same claim flips from `supported` (the historical result) to `unsupported`, because the cited disagreement rows do not have the required two distinct arXiv sources.
 
-| Validation                    |     Result |
-| ------------------------------ | ---------: |
-| Disagreement negative guard    | **Passed** |
-| Disagreement positive structural test | **Passed** |
-| Frozen disagreement guard (historical claim-007, current code) | **Passed** |
-| Comparative guard positive case | **Passed** |
-| Comparative guard negative case | **Passed** |
+| Validation                                                      |     Result |
+| ----------------------------------------------------------------- | ---------: |
+| Disagreement negative guard                                       | **Passed** |
+| Disagreement positive structural test                             | **Passed** |
+| Frozen disagreement guard (historical claim-007, current code)    | **Passed** |
+| Comparative guard positive case                                   | **Passed** |
+| Comparative guard negative case                                   | **Passed** |
 
 **Key takeaway:** The fix was confirmed against the actual historical failure case using the real Evidence Agent code path, not just a newly written synthetic test.
 
@@ -426,12 +428,12 @@ Synthesis generated a claim, independently and without prompting toward any part
 
 ### Result
 
-| Stage      | Result |
-| ---------- | ------ |
-| Evidence   | Marked the claim `unsupported` — cited comparison findings lack verification from multiple distinct sources required to establish cross-study disagreement |
-| Critic     | Flagged the claim (severity: major), decision: `revise` |
-| Synthesis  | Revised the claim by removing it entirely (`revision_action: remove`) |
-| Re-check   | Confirmed resolved on the revised draft |
+| Stage        | Result |
+| ------------- | ------ |
+| Evidence     | Marked the claim `unsupported` — cited comparison findings lack verification from multiple distinct sources required to establish cross-study disagreement |
+| Critic       | Flagged the claim (severity: major), decision: `revise` |
+| Synthesis    | Revised the claim by removing it entirely (`revision_action: remove`) |
+| Re-check     | Confirmed resolved on the revised draft |
 | Final status | `revised_and_accepted` |
 
 This is the strongest available evidence for the disagreement guard: the failure mode was not injected or synthetically constructed for this test. It emerged from an unconstrained live Synthesis call, was independently caught by Evidence, correctly actioned by Critic, and cleanly resolved by Synthesis — all on the real frozen baseline, in one continuous automated run.
@@ -440,9 +442,127 @@ This is the strongest available evidence for the disagreement guard: the failure
 
 ---
 
+# PHASE 4 — Robustness & Failure-Mode Hardening
+
+## 17. LLM API calls now retry transient failures with bounded backoff
+
+`GeminiClient.complete()` previously had no error handling at all — any network failure, timeout, or transient server error (5xx, 429) propagated straight up and crashed the entire pipeline run mid-call, with no distinction between a failure worth retrying and one that never would succeed.
+
+A retry classifier was added (`_is_retryable_error`) that checks both structured status codes and transient-failure text patterns (timeout, rate limit, service unavailable, etc.) before deciding whether to retry. Non-retryable failures (e.g. a bad API key, a malformed request) fail immediately rather than wasting retry attempts on a guaranteed repeat failure. The retry/backoff schedule reuses the same `API_RETRY_WAIT` pattern already used by Agent 2's retrieval robustness code, rather than inventing a second scheme.
+
+Tested with a deterministic fake API stub (no live Gemini calls, no real network dependency):
+
+| Validation                                                              |     Result |
+| -------------------------------------------------------------------------- | ---------: |
+| Transient failure retried, succeeds on next attempt                       | **Passed** |
+| All retries exhausted → raises with attempt count                         | **Passed** |
+| Non-retryable failure fails immediately, no retry                         | **Passed** |
+| Transient failure succeeds on the final allowed attempt (boundary case)   | **Passed** |
+
+**Key takeaway:** Retry logic needs to distinguish retryable from non-retryable failures explicitly — retrying blindly on any exception wastes quota on failures that will never succeed.
+
+---
+
+## 18. Malformed LLM JSON output is now a distinct, catchable error type
+
+`parse_json_response()` previously let a raw `json.JSONDecodeError` propagate on genuinely malformed (not just code-fenced) output, with no context on which agent or call produced it. It now raises a dedicated `LLMResponseParseError`, distinguishable from a structurally-valid-but-semantically-wrong response.
+
+**Key takeaway:** Distinguishing "the LLM didn't return JSON at all" from "the LLM returned JSON with the wrong shape" from "the LLM returned a well-formed but unsupported claim" matters — these are three different failure modes and the pipeline needs to be able to tell them apart.
+
+---
+
+## 19. Deterministic structural validation rejects malformed agent responses before they reach pipeline logic
+
+Each of Synthesis, Evidence, and Critic now validates the shape of its own LLM response before returning it — rejecting missing fields, wrong types, invalid enum values (e.g. an Evidence status outside `supported`/`partially_supported`/`unsupported`), and, for Critic, flags referencing a `claim_id` that doesn't exist in the draft.
+
+Each agent's malformed-response coverage was tested against a set of deliberately broken response shapes (9 cases each for Evidence and Critic), confirming every malformed case is rejected with a clear `ValueError` rather than silently propagating bad data downstream.
+
+**Key takeaway:** Structural validation belongs at the agent boundary, not downstream in the pipeline — catching a malformed response at the source makes the failure easier to diagnose than letting it surface as a confusing error several steps later.
+
+---
+
+## 20. A partial-resolution bug in the revision loop was found and fixed
+
+The pipeline's two terminal branches (accept, and retry-cap reached) originally updated every row in the run's revision log in one blanket pass:
+
+```python
+if critic_result["decision"] == "accept":
+    for row in revision_rows:
+        row["resolved"] = True
+        ...
+if revision_number == 2:
+    for row in revision_rows:
+        row["resolved"] = False
+        row["final_status"] = "shipped_with_flag"
+```
+
+This is correct for the accept branch, but wrong for the retry-cap branch: it marks **every** row in the run as `shipped_with_flag`, including claims that were genuinely fixed at an earlier revision and never flagged again. In a run where `claim_001` resolves after revision 1 but `claim_002` never resolves, the old code would mislabel `claim_001` as unresolved too — corrupting not just that one row, but the run-level `flags_remaining` count derived from it, which is exactly the number the Phase 5 frontend's "X of Y claims revised" stat depends on.
+
+**Why existing tests missed this:** every pipeline/revision test prior to this fix (`test_pipeline_revision_manual`, `test_pipeline_real_revision_manual`, `test_pipeline_ship_flags_manual`, `test_revision_handoff_manual`) used exactly one `claim_id` per run. A single-claim scenario cannot expose a bug that only manifests when different claims have different outcomes in the same run.
+
+**Fix:** row resolution is now tracked per-claim at each iteration — a row is marked `resolved`/`revised` as soon as its `claim_id` stops appearing in a subsequent Critic pass, and only rows whose `claim_id` is still present in the *final* flagged set are marked `shipped_with_flag` when the retry cap is reached.
+
+A new regression test (`test_pipeline_partial_resolution_manual.py`) exercises exactly this scenario: two claims flagged initially, one resolves after revision 1, the other remains flagged through the cap. The test confirms `claim_001`'s row is `resolved: true, final_status: "revised"` and `claim_002`'s rows are `shipped_with_flag`, with `flags_remaining == 1` — the correct count, not the `2` the old bug would have produced.
+
+**Known limitation of the fix's coverage:** a three-claim scenario where two different claims resolve at two different revision numbers was checked by manual code inspection, not by an automated test. The fix's logic generalizes correctly on inspection, but this is a weaker claim than test-verified coverage, and is noted here rather than implied as fully covered.
+
+**Key takeaway:** A bug can hide indefinitely behind a test suite that only ever exercises the simplest version of a scenario. Multi-entity partial-outcome cases are exactly where blanket-update logic breaks, and are worth testing explicitly rather than assuming single-entity tests generalize.
+
+---
+
+## 21. Guard coverage was extended: implicit comparative claims and semantic action validation
+
+Two gaps identified during the Phase 4 audit were closed:
+
+**Implicit comparative detection (Agent 6).** The original comparative guard only matched explicit comparative language ("outperforms," "better than," etc.). It missed the exact motivating case from item 2 — two models' results stated side by side with different percentages and no comparative keyword at all (e.g. "a Transformer achieving 86% accuracy versus a CNN achieving 76%"). A quantitative pattern was added to detect two or more model-plus-percentage mentions in a single claim, closing this gap without weakening the guard's core requirement — a claim still only counts as supported if a **single cited comparison row** independently states the comparative relationship, so a synthesized cross-row comparison still correctly fails.
+
+**Semantic `allowed_action` validation (Agent 7).** Critic's structural validation previously confirmed `allowed_action` was one of `rewrite`/`weaken`/`remove`, but not that the chosen action made sense given Evidence's verdict — nothing stopped Critic from choosing `weaken` for a claim Evidence marked fully `unsupported` with zero evidence, when only `remove` is defensible. A semantic check was added directly inside `CriticAgent.evaluate()`, rejecting an `unsupported` claim paired with any `allowed_action` other than `remove`, immediately after parsing Critic's own response — before it can propagate into revision instructions.
+
+| Validation                                          |     Result |
+| ----------------------------------------------------- | ---------: |
+| Implicit comparative claim (no keyword) now detected | **Passed** |
+| Explicit-keyword comparative detection unaffected     | **Passed** |
+| `unsupported` + non-`remove` action rejected          | **Passed** |
+| Valid Critic responses unaffected                     | **Passed** |
+
+**Key takeaway:** Structural validation (does the response have the right shape) and semantic validation (does the response make sense given the evidence) are different checks. Both are needed — the first catches malformed output, the second catches internally-consistent-but-wrong output.
+
+---
+
+## 22. Synthesis revision preserves the original draft state
+
+A focused regression test was added for `SynthesisAgent.revise()` to verify that applying a revision does not mutate the original draft object.
+
+The test creates a deep copy of the original draft, performs a revision using a deterministic fake LLM response, and then verifies that:
+
+* the original draft remains unchanged,
+* the revised draft preserves the original `draft_id`,
+* the revised draft preserves the original `research_question`,
+* and the revision produces exactly one LLM call.
+
+### Validation
+
+| Validation                                   |     Result |
+| -------------------------------------------- | ---------: |
+| Original draft remains unchanged             | **Passed** |
+| `draft_id` preserved after revision          | **Passed** |
+| `research_question` preserved after revision | **Passed** |
+| Revision call count                          | **Passed** |
+
+The regression is covered by:
+
+`test_synthesis_revise_idempotence_manual.py`
+
+This test verifies the non-mutation and contract-preservation behavior of `revise()`. It does **not** claim mathematical idempotence of repeated LLM generations, since separate LLM calls are not expected to produce byte-identical outputs.
+
+**Key takeaway:** Revision should produce a new validated draft state without mutating the previous draft, while preserving the identifiers and research context needed to track the revision correctly.
+
+
+---
+
 # Overall Findings
 
-## 17. The main engineering lesson: generation and verification should be separate
+## 23. The main engineering lesson: generation and verification should be separate
 
 Across the experiments, the same pattern appeared repeatedly:
 
@@ -451,7 +571,7 @@ Across the experiments, the same pattern appeared repeatedly:
 The pipeline therefore separates responsibilities:
 
 | Agent         | Main responsibility                       |
-| ------------- | ----------------------------------------- |
+| -------------- | ------------------------------------------ |
 | Planner       | Break down the research question          |
 | Retrieval     | Find relevant papers                      |
 | Analysis      | Extract structured findings               |
@@ -465,18 +585,20 @@ This separation makes it possible to test and improve each stage independently.
 
 ---
 
-## 18. Evidence verification needs both semantic and structural checks
+## 24. Evidence verification needs both semantic and structural checks
 
 The validation experiments showed that semantic verification alone is insufficient for certain claim types.
 
 Different classes of claims require different structural checks:
 
-| Claim type                 | Additional validation                                       |
-| -------------------------- | ----------------------------------------------------------- |
-| Standard factual claim     | Validate cited comparison evidence                          |
-| Disagreement claim         | Require disagreement-marked evidence                        |
-| Explicit comparative claim | Require explicit comparative relationship in cited evidence |
-| Revised claim              | Re-run Evidence and Critic against the full current draft   |
+| Claim type                  | Additional validation                                       |
+| ----------------------------- | ------------------------------------------------------------- |
+| Standard factual claim      | Validate cited comparison evidence                          |
+| Disagreement claim          | Require disagreement-marked evidence                        |
+| Explicit comparative claim  | Require explicit comparative relationship in cited evidence |
+| Implicit comparative claim  | Require quantitative multi-entity pattern detection, same evidentiary bar as explicit |
+| Revised claim               | Re-run Evidence and Critic against the full current draft   |
+| Malformed/failed API response | Reject via structural validation or retry before reaching pipeline logic |
 
 This makes the Evidence Agent more than an LLM-based plausibility checker. It combines model-based verification with deterministic constraints derived from the structured comparison schema.
 
@@ -484,35 +606,45 @@ This makes the Evidence Agent more than an LLM-based plausibility checker. It co
 
 ---
 
-## 19. Current system-level validation summary
+## 25. Current system-level validation summary
 
 The major validation results obtained so far are:
 
-| Validation                                    |          Result | Type         |
-| ---------------------------------------------- | ---------------: | ------------ |
-| Initial retrieval corpus                       |    **58 papers** | Real         |
-| Filtered canonical corpus                      |    **22 papers** | Real         |
-| Frozen comparison rows                         |           **34** | Real         |
-| Historical canonical Phase 2 claims            |            **7** | Real         |
-| Historical canonical Phase 2 supported claims  |        **7 / 7** | Real         |
-| Controlled revision test                       |   **1 revision** | Controlled   |
-| Incorrect value in revision test               |       **99.99%** | Controlled   |
-| Verified value after revision                  |       **87.32%** | Controlled   |
-| Maximum revisions allowed                      |            **2** | Controlled   |
-| Third revision attempted                       |           **No** | Controlled   |
-| Synthetic cross-row comparative claim          |     **Rejected** | Synthetic    |
-| Comparative guard regression                   |       **Passed** | Controlled   |
-| Disagreement negative guard                    |       **Passed** | Synthetic    |
-| Corrected disagreement analysis findings       |            **0** | Experimental |
-| Corrected experimental comparison rows         |           **29** | Experimental |
-| Frozen disagreement guard (historical claim-007, current code) | **Passed** | Controlled |
-| **Fresh live end-to-end run**                  | **Completed**     | **Real**     |
-| **Organically-generated disagreement overclaim caught** | **Yes** | **Real**     |
-| **Revision result (live run)**                 | **`revised_and_accepted`** | **Real** |
+| Validation                                                              |          Result | Type         |
+| --------------------------------------------------------------------------- | ---------------: | ------------ |
+| Initial retrieval corpus                                                | **58 papers**    | Real         |
+| Filtered canonical corpus                                               | **22 papers**    | Real         |
+| Frozen comparison rows                                                  | **34**           | Real         |
+| Historical canonical Phase 2 claims                                     | **7**            | Real         |
+| Historical canonical Phase 2 supported claims                           | **7 / 7**        | Real         |
+| Controlled revision test                                                | **1 revision**   | Controlled   |
+| Incorrect value in revision test                                        | **99.99%**       | Controlled   |
+| Verified value after revision                                           | **87.32%**       | Controlled   |
+| Maximum revisions allowed                                               | **2**            | Controlled   |
+| Third revision attempted                                                | **No**           | Controlled   |
+| Synthetic cross-row comparative claim                                   | **Rejected**     | Synthetic    |
+| Comparative guard regression                                            | **Passed**       | Controlled   |
+| Disagreement negative guard                                             | **Passed**       | Synthetic    |
+| Corrected disagreement analysis findings                                | **0**            | Experimental |
+| Corrected experimental comparison rows                                  | **29**           | Experimental |
+| Frozen disagreement guard (historical claim-007, current code)          | **Passed**       | Controlled   |
+| **Fresh live end-to-end run**                                           | **Completed**    | **Real**     |
+| **Organically-generated disagreement overclaim caught**                 | **Yes**          | **Real**     |
+| **Revision result (live run)**                                          | **`revised_and_accepted`** | **Real** |
+| LLM transient retry test                                                | **Passed**       | Controlled   |
+| LLM exhausted-retry test                                                 | **Passed**       | Controlled   |
+| LLM non-retryable failure test                                          | **Passed**       | Controlled   |
+| LLM retry-boundary (success on final attempt)                           | **Passed**       | Controlled   |
+| Malformed JSON → `LLMResponseParseError`                                | **Passed**       | Controlled   |
+| Structural validation (Synthesis/Evidence/Critic, 9 malformed cases each) | **Passed**      | Controlled   |
+| Partial-resolution regression (2-claim staggered outcome)               | **Passed**       | Controlled   |
+| Implicit comparative detection                                          | **Passed**       | Controlled   |
+| Semantic `allowed_action` rejection                                     | **Passed**       | Controlled   |
+| Synthesis `revise()` non-mutation / ID preservation                     | **Passed**       | Controlled   |
 
 ---
 
-## 20. What these experiments demonstrate
+## 26. What these experiments demonstrate
 
 The current experiments demonstrate that the system can:
 
@@ -521,11 +653,13 @@ The current experiments demonstrate that the system can:
 * generate structured research claims,
 * validate claims against the original comparison data,
 * detect disagreement claims that lack structurally marked disagreement evidence,
-* detect unsupported synthesized comparative relationships,
+* detect unsupported synthesized comparative relationships, both explicit and implicit,
 * detect and correct a controlled factual mismatch,
 * issue targeted revision instructions,
 * re-run verification after revision,
-* record the complete revision history,
+* record the complete revision history accurately even when different claims in the same run have different outcomes,
+* retry transient API failures with bounded backoff,
+* reject malformed or semantically unsafe agent output at the source,
 * and terminate safely when repeated revisions fail.
 
 The system is therefore not relying on a single LLM call to produce the final research result.
@@ -534,7 +668,7 @@ Instead, the current design uses a pipeline in which **generation, evidence veri
 
 ---
 
-## 21. Paper-to-evidence conversion rate
+## 27. Paper-to-evidence conversion rate
 
 Of the 22 canonical papers in the frozen baseline, 20 contributed evidence to at least one comparison row. The remaining 2 papers passed the domain-filtering stage (Agent 2's EEG relevance check) but did not contribute an extractable comparison finding during Analysis.
 
@@ -557,8 +691,10 @@ The current validation has several limitations:
 5. The current tests establish pipeline behavior and verification mechanics, but not yet the overall scientific superiority of Transformer-based approaches over CNN/RNN approaches.
 6. The current disagreement validation establishes the **structural enforcement mechanism**, and this has now been confirmed both by regression testing against the historical failure case (item 15) and by a live end-to-end run (item 16). The frozen baseline still does not provide sufficient evidence to establish a genuine cross-publication disagreement, and the corrected disagreement analysis currently produces no validated disagreement findings — the guard's job is to prevent such a claim from shipping unflagged, which it now does.
 7. The comparative guard addresses a specific failure mode: it prevents a claim from being supported solely by combining separate rows that do not explicitly state the claimed relationship. It does not prove that every possible multi-row inference is scientifically valid.
-8. Retrieval robustness, API failures, and rate-limit handling still require dedicated robustness testing.
+8. API failure handling, retry/backoff, and malformed-response handling for Agents 5–7 (Synthesis, Evidence, Critic) is now implemented and covered by deterministic tests (see items 17–21). Agent 2 (Retrieval) API-failure and rate-limit robustness remains a separate, not-yet-independently-validated item on Ayush's side of Phase 4.
 9. System-level evaluation against external research or human-verified baselines has not yet been completed.
 10. The frozen baseline is a **historical validation fixture**. Later retrieval and analysis improvements should be evaluated as separate experiments rather than silently replacing the baseline used for Phase 2/3 validation.
+11. The partial-resolution fix (item 20) is verified by test for a 2-claim staggered-outcome scenario and confirmed correct for a 3+-claim scenario by manual code inspection only, not by an automated test.
+12. The implicit-comparative regex pattern (item 21) uses a lazy 100-character window between a model keyword and a percentage value, which could in principle match across two unrelated sentences in an unusually dense claim. Not observed in practice, but not structurally impossible.
 
 These limitations define the next stage of evaluation rather than invalidating the current pipeline tests.
